@@ -6,6 +6,7 @@ import Signup from "./Signup/Signup"
 import PodcasterHomepage from "./Podcasters/Homepage/Homepage"
 import TranscriberHomepage from "./Transcribers/Homepage/Homepage"
 import ResearcherHomepage from "./Researcher/Homepage/Homepage"
+import EditorWrapper from "./Editor/EditorWrapper"
 
 function App() {
   return (
@@ -27,6 +28,9 @@ function App() {
       </Route>
       <Route exact={true} path="/researcher">
         <ResearcherHomepage />
+      </Route>
+      <Route exact={true} path="/editor">
+        <EditorWrapper />
       </Route>
     </Router>
   );
