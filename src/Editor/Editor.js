@@ -1,15 +1,16 @@
-import React, { useState } from "react"
-import EditorWrapper from "./EditorWrapper"
+import React, { useEffect, useState } from "react"
 import SpeakerSection from "./SpeakerSection/SpeakerSection"
+import Text from "./Text/Text"
 
 
-const useParseJsonAndSetStates = (wordArr) =>{
+const parseJsonAndSetStates = (wordArr) =>{
     let speakerList = [wordArr[0].speaker]
-    let currentSpeaker = ""
+    let currentSpeaker = wordArr[0].speaker
     let result = []
     let collector = []
     for(let i = 0; i < wordArr.length; i++){
-        if(wordArr[i].speaker !== currentSpeaker && i > 0){
+        if(wordArr[i].speaker !== currentSpeaker){
+            currentSpeaker = wordArr[i].speaker;
             result.push(collector)
             collector = []
             if(!speakerList.includes(wordArr[i].speaker)){
@@ -18,30 +19,104 @@ const useParseJsonAndSetStates = (wordArr) =>{
         }
         collector.push(wordArr[i])
     }
-    return {speakerNames: states, sections: result}
+    result.push(collector)
+    console.log(result)
+    return {speakerNames: speakerList, sections: result}
 }
 
 const Editor = (props) =>{
-    const data = JSON.parse(props.data)
-    const {speakerNames, sections} = useParseJsonAndSetStates(data)
+    const [editorMode, setEditorMode] = useState(0)
+    const [stateSections, setStateSections] = useState([])
+    const [wordNodes, setWordNodes] = useState([])
+    const [selectedWordIndex, setSelectedWordIndex] = useState(0)
 
-    const [speakers, setSpeakers] = useState(speakerNames)
+    //const [speakers, setSpeakers] = useState(speakerNames)
+
+    useEffect(()=>{
+        let data = JSON.parse(props.data)
+        console.log("I am setting data again")
+        data = [...data, ...data, ...data, ...data]
+        const temp = parseJsonAndSetStates(data)
+        let speakerNames = temp.speakerNames
+        let sections = temp.sections
+        //setSpeakers(speakerNames)
+        setStateSections(sections)
+    }, [])
+    
+    useEffect(()=>{
+        console.log("Resetting this jabroni")
+        if(!stateSections){
+            return
+        }
+        let result = []
+        let currentIndex = 0
+        const words = document.querySelectorAll(".Editor__Word")
+        words.forEach(el=>{
+            //el.createAttribute("totalwordindex")
+            el.setAttribute("totalwordindex", currentIndex++)
+            result.push(el)
+        })
+        setWordNodes(result)
+
+    }, [stateSections])
+
+
+    //functions to thread
+
 
     const setSpeakerNames = (oldName, newName) =>{
         //this needs to alter the larger guy up in wrapper!!
-        const innerSpeakers = [...speakers];
-        const i = innerSpeakers.indexOf(oldName)
-        innerSpeakers[i] = newName
-        setSpeakers(innerSpeakers)
+        //const innerSpeakers = [...speakers];
+        //const i = innerSpeakers.indexOf(oldName)
+        //innerSpeakers[i] = newName
+        //console.log(innerSpeakers)
+        //setSpeakers(innerSpeakers)
+        const newStateSections = []
+        for(let i = 0; i < stateSections.length; i++){
+            if(stateSections[i][0].speaker !== oldName){
+                newStateSections.push(stateSections[i])
+                continue
+            }
+            const collector = []
+            for(let j = 0; j < stateSections[i].length; j++){
+                const word = stateSections[i][j]
+                word.speaker = newName
+                collector.push(word)
+            }
+            newStateSections.push(collector)
+        }
+        setStateSections(newStateSections)
+    }
 
+    const handleWordClick = (e) =>{
+        if(editorMode === 2){
+            return
+        }
+        const newIndex = e.target.getAttribute("totalwordindex")
+        if(selectedWordIndex === newIndex){
+            setEditorMode(2)
+            return
+        }
+        wordNodes[selectedWordIndex].classList.remove("Editor__SelectedWord")
+        setSelectedWordIndex(newIndex)
+        wordNodes[newIndex].classList.add("Editor__SelectedWord")
     }
     
+
+    if(!stateSections){
+        console.log("Nothing here")
+        return null
+    }
+    console.log("SOMETHING HERE")
     return(
         <div>
         <h1>Editor</h1>
-        {sections.map(words => {
+        {stateSections.map((words, i) => {
             return(
-                <SpeakerSection speaker={words[0].speaker} stateUpdater={} />
+                <div className="section">
+                <SpeakerSection key={i*2} speaker={words[0].speaker} stateUpdater={setSpeakerNames} />
+                <Text setEditorMode={setEditorMode} editorMode={editorMode} handleWordClick={handleWordClick} text={words} specialKey={i} key={i*2+1} />
+                </div>
             )
         })}
         </div>
