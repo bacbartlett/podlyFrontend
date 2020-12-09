@@ -1,15 +1,13 @@
 import {createStore, applyMiddleware, combineReducers, compose} from "redux"
 
-import {podcastDisplayReducer} from "./reducers"
+import {podcastDisplayReducer, errorReducer, userReducer} from "./reducers"
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const reducer = combineReducers({podcastDisplay: podcastDisplayReducer})
+const reducer = combineReducers({podcastDisplay: podcastDisplayReducer, user: userReducer, error: errorReducer})
 
 const configureStore = initialState =>{
-    return createStore(reducer, initialState)
+    return createStore(reducer, initialState, composeEnhancers())
 }
 
-const store = configureStore({})
-
-export default store
+export const store = configureStore({})

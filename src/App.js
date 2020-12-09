@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Homepage from "./Homepage/Homepage"
 import Login from "./Login/Login"
 import Signup from "./Signup/Signup"
@@ -7,10 +7,58 @@ import PodcasterHomepage from "./Podcasters/Homepage/Homepage"
 import TranscriberHomepage from "./Transcribers/Homepage/Homepage"
 import ResearcherHomepage from "./Researcher/Homepage/Homepage"
 import EditorWrapper from "./Editor/EditorWrapper"
+import PodcastDisplayWrapper from "./Podcasters/PodcastDisplay/PodcastDisplayWrapper"
+import {store} from "./Store/store"
+import { Provider, useDispatch } from 'react-redux';
+import PodcasterNav from "./NavBar/PodcasterNav/NavBar"
+import TranscriberNav from "./NavBar/TranscriberNav/NavBar"
+import DefaultNav from "./NavBar/DefaultNav/NavBar"
+import { baseUrl } from './Globals';
+import { SET_USER } from './Store/actions';
 
 function App() {
+  const dispatch = useDispatch()
+  useEffect(()=>{
+    const token = localStorage.getItem("token")
+    const type = localStorage.getItem("type")
+    if(token && type){
+      const loginUsingToken = async() =>{
+        const res = await fetch(`${baseUrl}/${type.toLowerCase()}/token`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({token})
+        })
+        const data = await res.json()
+        if(data.msg){
+          return
+        }
+        const action = {
+          type: SET_USER,
+          payload: {...data, type}
+        }
+        console.log(action)
+        dispatch(action)
+      }
+
+
+      loginUsingToken()
+    }
+  },[])
   return (
     <Router>
+      <Switch>
+        <Route exact={false} path="/podcaster">
+          <PodcasterNav />
+        </Route>
+        <Route exact={false} path="/transcriber">
+          <TranscriberNav />
+        </Route>
+        <Route path="/" exact={false}>
+          <DefaultNav />
+        </Route>
+      </Switch>     
       <Route exact={true} path="/">
         <Homepage />
       </Route>
@@ -22,6 +70,9 @@ function App() {
       </Route>
       <Route exact={true} path="/podcaster">
         <PodcasterHomepage />
+      </Route>
+      <Route exact={true} path="/podcaster/podcasts/">
+        <PodcastDisplayWrapper />
       </Route>
       <Route exact={true} path="/transcriber">
         <TranscriberHomepage />
