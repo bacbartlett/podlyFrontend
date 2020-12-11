@@ -8,28 +8,22 @@ import TranscriberHomepage from "./Transcribers/Homepage/Homepage"
 import ResearcherHomepage from "./Researcher/Homepage/Homepage"
 import EditorWrapper from "./Editor/EditorWrapper"
 import PodcastDisplayWrapper from "./Podcasters/PodcastDisplay/PodcastDisplayWrapper"
-import {store} from "./Store/store"
-import { Provider, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import PodcasterNav from "./NavBar/PodcasterNav/NavBar"
 import TranscriberNav from "./NavBar/TranscriberNav/NavBar"
 import DefaultNav from "./NavBar/DefaultNav/NavBar"
-import { baseUrl } from './Globals';
 import { SET_USER } from './Store/actions';
+import MyPodcasts from "./Podcasters/MyPodcasts/MyPodcasts"
+import NewTranscriptForm from "./Podcasters/NewTranscriptionForm/NewTranscriptForm"
 
 function App() {
   const dispatch = useDispatch()
   useEffect(()=>{
-    const token = localStorage.getItem("token")
+    //const token = localStorage.getItem("token")
     const type = localStorage.getItem("type")
-    if(token && type){
+    if(type){
       const loginUsingToken = async() =>{
-        const res = await fetch(`${baseUrl}/${type.toLowerCase()}/token`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({token})
-        })
+        const res = await fetch(`/${type.toLowerCase()}/token`)
         const data = await res.json()
         if(data.msg){
           return
@@ -71,8 +65,14 @@ function App() {
       <Route exact={true} path="/podcaster">
         <PodcasterHomepage />
       </Route>
-      <Route exact={true} path="/podcaster/podcasts/">
+      <Route exact={true} path="/podcaster/myPodcasts">
+        <MyPodcasts />
+      </Route>
+      <Route exact={true} path="/podcaster/podcasts/:id">
         <PodcastDisplayWrapper />
+      </Route>
+      <Route exact={true} path="/podcaster/podcasts/:id/newtranscript">
+        <NewTranscriptForm />
       </Route>
       <Route exact={true} path="/transcriber">
         <TranscriberHomepage />

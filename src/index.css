@@ -11,3 +11,10 @@
     background-color: blue;
     color: white
 }
+
+.podcastCover{
+    height: 300px;
+    width: 300px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
