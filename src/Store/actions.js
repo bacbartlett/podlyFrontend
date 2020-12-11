@@ -133,3 +133,28 @@ export const clearMediaUrl = () =>{
         type: CLEAR_MEDIAURL
     }
 }
+
+export const createNewTranscriptJob = async (mediaLink, podcastId, speakerNames) =>{
+    const res = await fetch(`/podcaster/podcasts/${podcastId}/newJob`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            mediaUrl: mediaLink,
+            speakerNames
+        })
+    })
+    const data = await res.json();
+    if(!data.msg === "starting"){
+        return{
+            type: SET_ERROR,
+            payload: "There was a problem processing this transcription. Please try again later"
+        }
+    }
+    // const res2 = await fetch(`/podcaster/podcast/${podcastId}`)
+    // const data2 = res2.json()
+    // return{type: GET_PODCAST, payload: data2}
+    return clearMediaUrl()
+    
+}

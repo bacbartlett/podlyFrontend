@@ -13,7 +13,9 @@ const PodcastDisplayWrapper = (props) =>{
         console.log("calling the back")
         const asyncFunc = async() => await getPodcast(id)
         asyncFunc().then(val=>dispatch(val))
-        return clearPodcast
+        return ()=>{
+            dispatch(clearPodcast())
+        }
     }, [])
 
     return(

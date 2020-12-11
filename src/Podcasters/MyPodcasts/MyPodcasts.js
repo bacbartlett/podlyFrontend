@@ -15,7 +15,9 @@ const MyPodcasts = (props) =>{
     useEffect(()=>{
         const pods = setMyPodcasts()
         pods.then(val=> dispatch(val))
-        return clearMyPodcasts
+        return ()=>{
+            dispatch(clearMyPodcasts())
+        }
     },[])
 
     useEffect(()=>{

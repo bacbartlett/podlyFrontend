@@ -1,9 +1,25 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+import { useDispatch, useSelector } from "react-redux";
 import SpeakerBox from "./SpeakerBox"
+import {createNewTranscriptJob} from "../../Store/actions"
+import { useHistory, useParams } from "react-router";
+import {clearMediaUrl} from "../../Store/actions"
 
 const NewTranscriptForm = (props) =>{
+    const {id} = useParams()
+    const dispatch = useDispatch()
+    const mediaUrl = useSelector(state=>state.mediaUrl)
+    const history = useHistory()
     const [speakerSections, setSpeakerSections] = useState(["item"])
+    const [loading, setLoading] = useState(false)
 
+
+    useEffect(()=>{
+        return ()=>{
+            dispatch(clearMediaUrl())
+        }
+    },[])
+    
     const addSpeaker = () =>{
         const temp = [...speakerSections]
         temp.push("item")
@@ -11,12 +27,17 @@ const NewTranscriptForm = (props) =>{
     }
 
     const submit = () =>{
+        setLoading(true)
         const getAllBoxes = document.querySelectorAll(".speakerInputBox")
         const speakers = []
         getAllBoxes.forEach((el)=>{
             speakers.push(el.value)
         })
-        console.log(speakers)
+        const prom = createNewTranscriptJob(mediaUrl, id, speakers)
+        prom.then(val=> {
+            dispatch(val);
+            history.goBack()
+        })
     }
 
 
@@ -30,7 +51,7 @@ const NewTranscriptForm = (props) =>{
             })}
             <br/>
             <button onClick={addSpeaker}>Add Speaker</button>
-            <button onClick={submit}>Submit</button>
+            {loading ? <button>Pending</button> : <button onClick={submit}>Submit</button>}
         </div>
         
     )
