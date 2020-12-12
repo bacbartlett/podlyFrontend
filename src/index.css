@@ -1,6 +1,11 @@
 @import "./normalize.css";
 @import "./Editor/AudioPlayer/AudioPlayer.css";
 
+html{
+    height: 100%;
+}
+
+
 .NavBar{
     height: 75px;
     background-color: #1cb3ff;
@@ -18,4 +23,22 @@
     width: 300px;
     background-size: 100%;
     background-repeat: no-repeat;
+}
+
+.speakerClickContextBox{
+    position: absolute;
+}
+
+.speakerOption{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fae9e9;
+    min-width: 120px;
+    min-height: 35px;
+    border-bottom: 1px solid black;
+}
+
+.speakerOption:hover{
+    background-color: whitesmoke;
 }

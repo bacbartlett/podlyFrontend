@@ -1,5 +1,5 @@
 import {GET_PODCAST, CLEAR_PODCAST, SET_USER, REMOVE_USER, SET_ERROR, CLEAR_ERROR, SET_MYPODCASTS, CLEAR_MYPODCASTS, SET_MEDIAURL, CLEAR_MEDIAURL,
-    SET_TRANSCRIPTS, CLEAR_TRANSCRIPTS, GET_EDITORDATA, CLEAR_EDITORDATA} from "./actions"
+    SET_TRANSCRIPTS, CLEAR_TRANSCRIPTS, GET_EDITORDATA, CLEAR_EDITORDATA, UPDATE_WORDARR, UPDATE_AUDIOISLOADED} from "./actions"
 
 export const podcastDisplayReducer = (state={}, action)=>{
     switch(action.type){
@@ -93,6 +93,28 @@ export const editorReducer = (state={}, action) =>{
         }
         case CLEAR_EDITORDATA:{
             return {}
+        }
+        default:{
+            return state
+        }
+    }
+}
+
+export const updateWordArrReducer = (state = 0, action) => {
+    switch(action.type){
+        case UPDATE_WORDARR:{
+            return state + 1
+        }
+        default:{
+            return state
+        }
+    }
+}
+
+export const updateAudioIsLoadedReducer = (state = 0, action) =>{
+    switch(action.type){
+        case UPDATE_AUDIOISLOADED:{
+            return state + 1
         }
         default:{
             return state

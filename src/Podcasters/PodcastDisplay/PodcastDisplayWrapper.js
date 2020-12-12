@@ -10,7 +10,6 @@ const PodcastDisplayWrapper = (props) =>{
     const podcastInfo = useSelector(state=>state.podcastDisplay)
 
     useEffect(()=>{
-        console.log("calling the back")
         const asyncFunc = async() => await getPodcast(id)
         asyncFunc().then(val=>dispatch(val))
         return ()=>{

@@ -5,7 +5,6 @@ import Replay30Icon from "@material-ui/icons/Replay30"
 import PauseIcon from '@material-ui/icons/Pause';
 import Forward10Icon from '@material-ui/icons/Forward10';
 import Forward30Icon from '@material-ui/icons/Forward30';
-import {useDispatch, useSelector} from "react-redux"
 
 
 const Controls = (props) =>{

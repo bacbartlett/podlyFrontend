@@ -15,6 +15,8 @@ export const SET_TRANSCRIPTS = "SET_TRANSCRIPTS"
 export const CLEAR_TRANSCRIPTS = "CLEAR_TRANSCRIPTS"
 export const GET_EDITORDATA = "GET_EDITORDATA"
 export const CLEAR_EDITORDATA = "CLEAR_EDITORDATA"
+export const UPDATE_WORDARR = "UPDATE_WORDARR"
+export const UPDATE_AUDIOISLOADED = "UPDATE_AUDIOISLOADED"
 
 
 
@@ -59,7 +61,6 @@ export const setUser = async (type, email, password) =>{
     //localStorage.setItem("token", data.token)
     document.cookie = `loginToken=${data.token}`;
     localStorage.setItem("type", type)
-    console.log(data, data.token)
     return {
         type: SET_USER,
         payload: {...data, type}
@@ -195,5 +196,18 @@ export const getEditorData = async (id) =>{
 export const clearEditorData = () =>{
     return{
         type: CLEAR_EDITORDATA,
+    }
+}
+
+export const updateWordArr = () =>{
+    return{
+        type: UPDATE_WORDARR
+    }
+}
+
+export const updateAudioIsLoaded = (val) =>{
+    return{
+        type: UPDATE_AUDIOISLOADED,
+        payload: val
     }
 }

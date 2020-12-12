@@ -1,132 +1,139 @@
 import React, { useEffect, useState } from "react"
-import SpeakerSection from "./SpeakerSection/SpeakerSection"
-import Text from "./Text/Text"
 import AudioPlayerWrapper from "./AudioPlayer/AudioPlayerWrapper"
-
-//breaking up the word array into sections
-const parseJsonAndSetStates = (wordArr) =>{
-    let speakerList = [wordArr[0].speaker]
-    let currentSpeaker = wordArr[0].speaker
-    let result = []
-    let collector = []
-    for(let i = 0; i < wordArr.length; i++){
-        if(wordArr[i].speaker !== currentSpeaker){
-            currentSpeaker = wordArr[i].speaker;
-            result.push(collector)
-            collector = []
-            if(!speakerList.includes(wordArr[i].speaker)){
-                speakerList.push(wordArr[i].speaker)
-            }
-        }
-        collector.push(wordArr[i])
-    }
-    result.push(collector)
-    console.log(result)
-    return {speakerNames: speakerList, sections: result}
-}
+import Text from "./Text/Text"
+import SpeakerSection from "./SpeakerSection/SpeakerSection"
+import { useDispatch, useSelector } from "react-redux"
+import {updateAudioIsLoaded} from "../Store/actions"
 
 const Editor = (props) =>{
+    const dispatch = useDispatch()
+    const {data} = props
+    const words = data.data
+    const updateWordArr = useSelector(state=>state.updateWordArr)
+    const updateAudioIsLoadedSLice = useSelector(state=>state.updateAudioIsLoaded)
+
+    const [sections, setSections] = useState([])
+    const [wordIndex, setWordIndex] = useState([])
+    const [currentlySelection, setCurrentlySelected] = useState([0,0])
+    const [allWords, setAllWords] = useState([])
     const [editorMode, setEditorMode] = useState(0)
-    const [stateSections, setStateSections] = useState([])
-    const [wordNodes, setWordNodes] = useState([])
-    const [selectedWordIndex, setSelectedWordIndex] = useState(0)
 
-    //const [speakers, setSpeakers] = useState(speakerNames)
-
-
-    //on mount
+    console.log("Just checking:", sections)
+    //On mount, set up sections
     useEffect(()=>{
-        console.log(props.data)
-        let data = props.data.data
-        const temp = parseJsonAndSetStates(data)
-        let speakerNames = temp.speakerNames
-        let sections = temp.sections
-        //setSpeakers(speakerNames)
-        setStateSections(sections)
+        const tempSections = []
+        let tempSection = []
+        let currentSpeaker = words[0].speaker
+        for(let i = 0; i < words.length; i++){
+            const word = words[i]
+            if(word.speaker !== currentSpeaker){
+                tempSections.push(tempSection)
+                tempSection = []
+                currentSpeaker = word.speaker
+            }
+            tempSection.push(word)
+        }
+        console.log("First one ran")
+        setSections(tempSections)
     }, [])
-    
 
-    //when state sections change,
-    //readd the totalword index and upddate the list
+
+
+    //updates the word index for near constant lookup times
     useEffect(()=>{
-        console.log("Resetting this jabroni")
-        if(!stateSections){
-            return
-        }
-        let result = []
-        let currentIndex = 0
         const words = document.querySelectorAll(".Editor__Word")
-        words.forEach(el=>{
-            //el.createAttribute("totalwordindex")
-            el.setAttribute("totalwordindex", currentIndex++)
-            result.push(el)
-        })
-        setWordNodes(result)
-
-    }, [stateSections])
-
-
-    //functions to thread
-
-
-    const setSpeakerNames = (oldName, newName) =>{
-        //this needs to alter the larger guy up in wrapper!!
-        //const innerSpeakers = [...speakers];
-        //const i = innerSpeakers.indexOf(oldName)
-        //innerSpeakers[i] = newName
-        //console.log(innerSpeakers)
-        //setSpeakers(innerSpeakers)
-        const newStateSections = []
-        for(let i = 0; i < stateSections.length; i++){
-            if(stateSections[i][0].speaker !== oldName){
-                newStateSections.push(stateSections[i])
-                continue
+        const tempWordIndex = []
+        const tempAllWords = []
+        for(let i = 0; i < words.length; i ++){
+            let secondIndex = Math.floor(words[i].getAttribute("starttime"))
+            if(!tempWordIndex[secondIndex]){
+                tempWordIndex[secondIndex] = []
             }
-            const collector = []
-            for(let j = 0; j < stateSections[i].length; j++){
-                const word = stateSections[i][j]
-                word.speaker = newName
-                collector.push(word)
-            }
-            newStateSections.push(collector)
+            words[i].setAttribute("totalwordindex", i)
+            tempWordIndex[secondIndex].push(words[i])
+            tempAllWords.push(words[i])
         }
-        setStateSections(newStateSections)
-    }
+        setWordIndex(tempWordIndex)
+        setAllWords(tempAllWords)
 
-    const handleWordClick = (e) =>{
-        if(editorMode === 2){
+
+    }, [updateWordArr])
+
+
+    //this function needs to be threaded through so that it can find audio
+    const keepWithTime = (e) =>{
+        const selected = document.querySelectorAll(".Editor__SelectedWord")
+        //testcomment
+        selected.forEach(el=>el.classList.remove("Editor__SelectedWord"))
+
+        const currentTime = (Math.floor(e.target.currentTime * 100)) / 100
+        let currentIndex = Math.floor(currentTime)
+        let wordsAtSecond = wordIndex[currentIndex]
+        //finds words at the second prior if any
+        let currentWord
+
+        while(!wordsAtSecond && currentIndex >= 0){
+            currentIndex -= 1;
+            wordsAtSecond = wordIndex[currentIndex]
+        }
+        //only true if going negative
+        if(!wordsAtSecond){
             return
         }
-        const newIndex = e.target.getAttribute("totalwordindex")
-        if(selectedWordIndex === newIndex){
-            setEditorMode(2)
-            return
-        }
-        wordNodes[selectedWordIndex].classList.remove("Editor__SelectedWord")
-        setSelectedWordIndex(newIndex)
-        wordNodes[newIndex].classList.add("Editor__SelectedWord")
-    }
-    
 
-    if(!stateSections){
-        console.log("Nothing here")
-        return null
+        for(let i = 0; i < wordsAtSecond.length; i++){
+            currentWord = wordsAtSecond[i]
+            if(currentWord.getAttribute("endtime") > currentTime){
+                break
+            }
+        }
+        currentWord.classList.add("Editor__SelectedWord")
     }
-    console.log("SOMETHING HERE")
+
+
+
+    const changeSpeaker = (oldName, newName, sections) =>{
+        const result = []
+        console.log("At start sections,", sections)
+        for(let i = 0; i < sections.length; i++){
+            if(sections[i][0].speaker !== oldName){
+                result.push(sections[i])
+            } else{
+                const collector = []
+                for(let j = 0; j < sections[i].length; j++){
+                    const word = {...sections[i][j]}
+                    word.speaker = newName
+                    collector.push(word)
+                }
+                result.push(collector)
+            }
+            
+        }
+        console.log(result)
+        console.log("Second one ran")
+        setSections(result)
+    }
+
+    console.log("About to render, here is sections:", sections)
+    if(!sections.length){
+        return <p>Loading</p>
+    }
+
     return(
-        <div>
-        <h1>Editor</h1>
-        <AudioPlayerWrapper />
-        {stateSections.map((words, i) => {
-            return(
-                <div className="section">
-                <SpeakerSection key={i*2} speaker={words[0].speaker} stateUpdater={setSpeakerNames} />
-                <Text setEditorMode={setEditorMode} editorMode={editorMode} handleWordClick={handleWordClick} text={words} specialKey={i} key={i*2+1} />
-                </div>
-            )
-        })}
+        <div className="editorPage">
+            <h2>Editor</h2>
+            <AudioPlayerWrapper keepWithTime={keepWithTime} />
+            {sections.map((el, i) => {
+                return(
+                    <div className="section" key={i}>
+                        <SpeakerSection speakerList={["Bob", "Alice", "Jones"]} number={i} speaker={el[0].speaker} sections={sections} stateUpdater={changeSpeaker} />
+                        <Text text={el} specialKey={i} editorMode={editorMode} />
+                    </div>
+                )
+            })}
         </div>
     )
+
 }
 
 export default Editor

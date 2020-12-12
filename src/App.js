@@ -32,7 +32,6 @@ function App() {
           type: SET_USER,
           payload: {...data, type}
         }
-        console.log(action)
         dispatch(action)
       }
 

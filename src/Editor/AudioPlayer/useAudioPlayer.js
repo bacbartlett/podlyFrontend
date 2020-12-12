@@ -1,9 +1,11 @@
 import {useState, useEffect} from "react";
+import { useDispatch } from "react-redux";
+import {updateAudioIsLoaded} from "../../Store/actions"
 
-const useAudioPlayer = (podcast) =>{
-
+const useAudioPlayer = (podcast, keepWithTime) =>{
+    const dispatch = useDispatch()
     //const [length, setLegth] = useState(podcast.length);
-    const [length, setLegth] = useState(22);
+    const [length, setLegth] = useState(0);
     const [currentTime, setCurrentTime] = useState();
     const [playing, setPlaying] = useState(false);
     const [clickedTime, setClickedTime] = useState(0);
@@ -18,6 +20,7 @@ const useAudioPlayer = (podcast) =>{
         if(!audio){
             return
         }
+        //dispatch(updateAudioIsLoaded(true))
 
         const setAudioData = () =>{
             setLegth(audio.duration);
@@ -30,6 +33,7 @@ const useAudioPlayer = (podcast) =>{
         }
 
         audio.addEventListener("loadeddata", setAudioData);
+        audio.addEventListener("timeupdate", keepWithTime);
         audio.addEventListener("timeupdate", setAudioTime);
 
         if(playing){
@@ -46,6 +50,7 @@ const useAudioPlayer = (podcast) =>{
         return ()=>{
             audio.removeEventListener("loadeddata", setAudioData);
             audio.removeEventListener("timeupdate", setAudioTime);
+            audio.removeEventListener("timeupdate", keepWithTime)
         }
     });
 
@@ -54,6 +59,7 @@ const useAudioPlayer = (podcast) =>{
         if(!audio){
             return
         }
+        dispatch(updateAudioIsLoaded(true))
 
         const setAudioData = () =>{
             setLegth(audio.duration);
@@ -64,6 +70,7 @@ const useAudioPlayer = (podcast) =>{
 
         audio.addEventListener("loadeddata", setAudioData);
         audio.addEventListener("timeupdate", setAudioTime);
+
 
         if(playing){
             audio.play();
