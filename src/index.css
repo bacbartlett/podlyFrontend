@@ -1,8 +1,9 @@
 @import "./normalize.css";
+@import "./Editor/AudioPlayer/AudioPlayer.css";
 
 .NavBar{
     height: 75px;
-    background-color: lightblue;
+    background-color: #1cb3ff;
     color: white;
     width: 100%;
 }

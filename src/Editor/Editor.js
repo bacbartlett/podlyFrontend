@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react"
 import SpeakerSection from "./SpeakerSection/SpeakerSection"
 import Text from "./Text/Text"
+import AudioPlayerWrapper from "./AudioPlayer/AudioPlayerWrapper"
 
-
+//breaking up the word array into sections
 const parseJsonAndSetStates = (wordArr) =>{
     let speakerList = [wordArr[0].speaker]
     let currentSpeaker = wordArr[0].speaker
@@ -32,10 +33,11 @@ const Editor = (props) =>{
 
     //const [speakers, setSpeakers] = useState(speakerNames)
 
+
+    //on mount
     useEffect(()=>{
-        let data = JSON.parse(props.data)
-        console.log("I am setting data again")
-        data = [...data, ...data, ...data, ...data]
+        console.log(props.data)
+        let data = props.data.data
         const temp = parseJsonAndSetStates(data)
         let speakerNames = temp.speakerNames
         let sections = temp.sections
@@ -43,6 +45,9 @@ const Editor = (props) =>{
         setStateSections(sections)
     }, [])
     
+
+    //when state sections change,
+    //readd the totalword index and upddate the list
     useEffect(()=>{
         console.log("Resetting this jabroni")
         if(!stateSections){
@@ -111,6 +116,7 @@ const Editor = (props) =>{
     return(
         <div>
         <h1>Editor</h1>
+        <AudioPlayerWrapper />
         {stateSections.map((words, i) => {
             return(
                 <div className="section">

@@ -80,7 +80,7 @@ function App() {
       <Route exact={true} path="/researcher">
         <ResearcherHomepage />
       </Route>
-      <Route exact={true} path="/editor">
+      <Route exact={true} path="/transcriber/transcribe/:transcriptId">
         <EditorWrapper />
       </Route>
     </Router>

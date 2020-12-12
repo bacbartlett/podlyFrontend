@@ -1,4 +1,5 @@
-import {GET_PODCAST, CLEAR_PODCAST, SET_USER, REMOVE_USER, SET_ERROR, CLEAR_ERROR, SET_MYPODCASTS, CLEAR_MYPODCASTS, SET_MEDIAURL, CLEAR_MEDIAURL} from "./actions"
+import {GET_PODCAST, CLEAR_PODCAST, SET_USER, REMOVE_USER, SET_ERROR, CLEAR_ERROR, SET_MYPODCASTS, CLEAR_MYPODCASTS, SET_MEDIAURL, CLEAR_MEDIAURL,
+    SET_TRANSCRIPTS, CLEAR_TRANSCRIPTS, GET_EDITORDATA, CLEAR_EDITORDATA} from "./actions"
 
 export const podcastDisplayReducer = (state={}, action)=>{
     switch(action.type){
@@ -64,6 +65,34 @@ export const mediaUrlReducer = (state="", action) =>{
         }
         case CLEAR_MEDIAURL:{
             return ""
+        }
+        default:{
+            return state
+        }
+    }
+}
+
+export const transcriptsReducer = (state=[], action)=>{
+    switch(action.type){
+        case SET_TRANSCRIPTS:{
+            return action.payload
+        }
+        case CLEAR_TRANSCRIPTS: {
+            return []
+        }
+        default:{
+            return state
+        }
+    }
+}
+
+export const editorReducer = (state={}, action) =>{
+    switch(action.type){
+        case GET_EDITORDATA:{
+            return action.payload
+        }
+        case CLEAR_EDITORDATA:{
+            return {}
         }
         default:{
             return state

@@ -11,6 +11,10 @@ export const SET_MYPODCASTS = "SET_MYPODCASTS"
 export const CLEAR_MYPODCASTS = "CLEAR_MYPODCASTS"
 export const SET_MEDIAURL = "SET_MEDIAURL"
 export const CLEAR_MEDIAURL = "CLEAR_MEDIAURL"
+export const SET_TRANSCRIPTS = "SET_TRANSCRIPTS"
+export const CLEAR_TRANSCRIPTS = "CLEAR_TRANSCRIPTS"
+export const GET_EDITORDATA = "GET_EDITORDATA"
+export const CLEAR_EDITORDATA = "CLEAR_EDITORDATA"
 
 
 
@@ -157,4 +161,39 @@ export const createNewTranscriptJob = async (mediaLink, podcastId, speakerNames)
     // return{type: GET_PODCAST, payload: data2}
     return clearMediaUrl()
     
+}
+
+export const getTranscripts = async() =>{
+    const res = await fetch("/transcriber/openprojects")
+    const data = await res.json()
+    return {
+        type: SET_TRANSCRIPTS,
+        payload: data
+    }
+}
+
+export const clearTranscripts = () =>{
+    return{
+        type: CLEAR_TRANSCRIPTS
+    }
+}
+
+export const getEditorData = async (id) =>{
+    const res = await fetch("/transcriber/transcription/" + id)
+    const data = await res.json()
+    if(data.msg){
+        return{
+            type: SET_ERROR,
+            payload: data.msg
+        }
+    }
+    return {
+        type: GET_EDITORDATA,
+        payload: data}
+}
+
+export const clearEditorData = () =>{
+    return{
+        type: CLEAR_EDITORDATA,
+    }
 }
