@@ -14,7 +14,7 @@ const AudioPlayer = (props) =>{
             <audio id="audio" src={props.podcast}/>
             <Volume makeSetAudioVolume={makeSetAudioVolume} />
             <Bar setClickedTime={setClickedTime} length={length} currentTime={currentTime} />
-            <Controls setPlaying={setPlaying} playing={playing} />
+            <Controls setClickedTime={setClickedTime} setPlaying={setPlaying} playing={playing} />
         </div>
         
     )

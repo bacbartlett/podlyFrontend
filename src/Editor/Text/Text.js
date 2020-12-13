@@ -55,6 +55,7 @@ const Text = (props) =>{
                 }
                 node.setAttribute("starttime", startTime + (timePerWord * i))
                 node.setAttribute("endtime", startTime + (timePerWord * (i + 1)))
+                node.setAttribute("sectionindex", specialKey)
                 node.classList.add("Editor__Word")
                 e.target.insertBefore(node, edit.node)
             }

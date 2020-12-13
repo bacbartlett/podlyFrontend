@@ -17,6 +17,8 @@ export const GET_EDITORDATA = "GET_EDITORDATA"
 export const CLEAR_EDITORDATA = "CLEAR_EDITORDATA"
 export const UPDATE_WORDARR = "UPDATE_WORDARR"
 export const UPDATE_AUDIOISLOADED = "UPDATE_AUDIOISLOADED"
+export const UPDATE_SECTIONS = "UPDATE_SECTIONS"
+export const CLEAR_SECTIONS = "CLEAR_SECTIONS"
 
 
 
@@ -211,3 +213,17 @@ export const updateAudioIsLoaded = (val) =>{
         payload: val
     }
 }
+
+export const updateSections = (val) =>{
+    return{
+        type: UPDATE_SECTIONS,
+        payload: val
+    }
+}
+
+export const clearSections = () =>{
+    return{
+        type: CLEAR_SECTIONS
+    }
+}
+

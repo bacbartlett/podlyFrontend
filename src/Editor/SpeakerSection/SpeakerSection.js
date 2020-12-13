@@ -6,10 +6,20 @@ const SpeakerSection = (props) =>{
     const stateUpdater = props.stateUpdater
     const number = props.number
     const sections = props.sections
+    const changeSectionSpeaker = props.changeSectionSpeaker
 
-    console.log("As it is being passed down:", sections)
+    const changeSectionNameFunction = (name) =>{
+        changeSectionSpeaker(number, name, sections)
+    } 
+
+    const createSectionNameSwitcherFunction = (name, sections)=>{
+        return(e) =>{
+            changeSectionNameFunction(name)
+        }
+    }
+    
+
     const changeSpeakerName = (name) =>{
-        console.log("As it is being feed into the function:", sections)
         stateUpdater(speakerName, name, sections)
     }
 
@@ -22,7 +32,6 @@ const SpeakerSection = (props) =>{
     //set up the event listeners to open and close menus
     useEffect(()=>{
         const handleClick = (e) =>{
-            console.log("clicked")
             e.stopPropagation()
             document.querySelector("html").addEventListener("click", handleClickOut)
             const div = document.createElement("div")
@@ -31,16 +40,25 @@ const SpeakerSection = (props) =>{
             div.style.top = e.clientY + "px";
             div.style.left = e.clientX + "px";
             div.backgroundColor = "grey"
-
+            
             for(let i = 0; i < props.speakerList.length; i++){
                 const option = document.createElement("div")
-                option.innerHTML = props.speakerList[i]
+                option.innerHTML = `${speakerName} => ${props.speakerList[i].name}`
                 option.style.display = "flex"
                 option.classList.add("speakerOption")
                 div.appendChild(option)
-                console.log("About to add the event listeners, sections:", sections)
-                option.addEventListener("click", createNameSwitcherFunction(props.speakerList[i], sections))
+                option.addEventListener("click", createNameSwitcherFunction(props.speakerList[i].name, sections))
             }
+            for(let i = 0; i < props.speakerList.length; i++){
+                const option = document.createElement("div")
+                option.innerHTML = `This Section => ${props.speakerList[i].name}`
+                option.style.display = "flex"
+                option.classList.add("speakerOption")
+                div.appendChild(option)
+                option.addEventListener("click", createSectionNameSwitcherFunction(props.speakerList[i].name, sections))
+            }
+
+            
 
             e.target.addEventListener("click", handleClickOut)
         }
@@ -58,7 +76,7 @@ const SpeakerSection = (props) =>{
             document.getElementById(`speakerSection${number}`).removeEventListener("click", handleClick)
         }
         return removeEventListeners
-    }, [])
+    })
 
     return(
         <>

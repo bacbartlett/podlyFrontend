@@ -25,7 +25,7 @@ html{
     background-repeat: no-repeat;
 }
 
-.speakerClickContextBox{
+.speakerClickContextBox, .localSpeakerContextBox{
     position: absolute;
 }
 

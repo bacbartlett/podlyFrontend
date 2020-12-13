@@ -25,7 +25,7 @@ const EditorWrapper = (props) =>{
         return <p>Loading</p>
     } 
     return(
-        <Editor data={stateEditorData} />
+        <Editor data={stateEditorData} speakerOptions={editorData.transcript.Speakers} />
     )
 }
 

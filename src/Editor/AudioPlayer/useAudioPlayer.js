@@ -32,6 +32,8 @@ const useAudioPlayer = (podcast, keepWithTime) =>{
             //
         }
 
+        
+
         audio.addEventListener("loadeddata", setAudioData);
         audio.addEventListener("timeupdate", keepWithTime);
         audio.addEventListener("timeupdate", setAudioTime);

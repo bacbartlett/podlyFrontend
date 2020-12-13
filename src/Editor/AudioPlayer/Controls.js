@@ -13,6 +13,22 @@ const Controls = (props) =>{
         props.setPlaying(!props.playing)
     }
 
+    const goBack30 = (e) =>{
+        props.setClickedTime(document.getElementById("audio").currentTime - 30 )
+    }
+
+    const goBack10 = (e) =>{
+        props.setClickedTime(document.getElementById("audio").currentTime - 10 )
+    }
+
+    const goForward10 = (e) =>{
+        props.setClickedTime(document.getElementById("audio").currentTime + 10 )
+    }
+
+    const goForward30 = (e) =>{
+        props.setClickedTime(document.getElementById("audio").currentTime + 30 )
+    }
+
     const handleGoToNextSong = () => {
         console.log("Needs to be changed in controls")
     }
@@ -24,11 +40,11 @@ const Controls = (props) =>{
 
     return (
         <div className="AudioPlayer__Controls AudioPlayer__Section">
-            <Replay30Icon />
-            <Replay10Icon />
+            <Replay30Icon onClick={goBack30} />
+            <Replay10Icon onClick={goBack10} />
             {props.playing ? <PauseIcon onClick={toggle} /> : <PlayArrowIcon onClick={toggle} />}
-            <Forward10Icon />
-            <Forward30Icon />
+            <Forward10Icon onClick={goForward10} />
+            <Forward30Icon onClick={goForward30} />
         </div>
     )
 }
