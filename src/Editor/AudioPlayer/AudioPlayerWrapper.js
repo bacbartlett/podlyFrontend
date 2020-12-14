@@ -13,7 +13,7 @@ const AudioPlayerWrapper = (props) =>{
         }
     }, [editorData])
 
-    return <AudioPlayer keepWithTime={props.keepWithTime} podcast={podcastUrl}/>
+    return <AudioPlayer editorMode={props.editorMode} setEditorMode={props.setEditorMode} keepWithTime={props.keepWithTime} podcast={podcastUrl}/>
 }
 
 export default AudioPlayerWrapper

@@ -75,7 +75,7 @@ const SpeakerSection = (props) =>{
         const removeEventListeners = () =>{
             document.getElementById(`speakerSection${number}`).removeEventListener("click", handleClick)
         }
-        return removeEventListeners
+        //return removeEventListeners
     })
 
     return(

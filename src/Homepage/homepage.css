@@ -1,0 +1,9 @@
+.homepageHero{
+    height: 500px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    color: black;
+    flex-direction: column;
+    justify-content: center;
+}

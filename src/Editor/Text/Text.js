@@ -5,7 +5,7 @@ import {updateWordArr} from "../../Store/actions"
 
 const Text = (props) =>{
     const dispatch = useDispatch()
-    const {text, specialKey} = props
+    const {text, specialKey, speaker} = props
     const editorMode = props.editorMode === 2
     
     
@@ -13,7 +13,28 @@ const Text = (props) =>{
         const spans = e.target.childNodes
         const results = []
         for(let i = 0; i < spans.length; i++){
-            const inner = spans[i].innerHTML.split("")
+            let inner = spans[i].innerHTML.split("")
+            
+            if((inner.includes("<") && inner.includes(">"))){
+                const tempInner = []
+                let insideTheBrackets = false
+                for(let k = 0; k < inner.length; k++){
+                    if(inner[k]=== "<"){
+                        insideTheBrackets = true
+                    }
+                    if(!insideTheBrackets){
+                        tempInner.push(inner[k])
+                    }
+                    if(inner[k]=== ">"){
+                        insideTheBrackets = false
+                    }
+                }
+                inner = tempInner
+                spans[i].innerHTML = tempInner.join("")
+            }
+            
+
+
             let counter = 0;
             for(let j = 0; j < inner.length; j++){
                 if(inner[j] === " "){
@@ -56,6 +77,7 @@ const Text = (props) =>{
                 node.setAttribute("starttime", startTime + (timePerWord * i))
                 node.setAttribute("endtime", startTime + (timePerWord * (i + 1)))
                 node.setAttribute("sectionindex", specialKey)
+                node.setAttribute("speaker", speaker)
                 node.classList.add("Editor__Word")
                 e.target.insertBefore(node, edit.node)
             }
@@ -78,11 +100,11 @@ const Text = (props) =>{
         <>
         {editorMode ? <div onBlur={reinsertMetaData} className={specialKey} contentEditable={true}>
                 {text.map((el, i) =>{
-                    return <span className="Editor__Word"  starttime={el.startTime} sectionindex={specialKey} wordindex={i} endtime={el.endTime} key={specialKey.toString() + i.toString()}>{el.formatted + " "}</span>
+                    return <span className="Editor__Word"  speaker={el.speaker} starttime={el.startTime} sectionindex={specialKey} wordindex={i} endtime={el.endTime} key={specialKey.toString() + i.toString()}>{el.formatted + " "}</span>
                 })}
         </div> : <div>
             {text.map((el, i) =>{
-                return <span className="Editor__Word" starttime={el.startTime} sectionindex={specialKey} wordindex={i} endtime={el.endTime} key={specialKey.toString() + i.toString()}>{el.formatted + " "}</span>
+                return <span className="Editor__Word" speaker={el.speaker} starttime={el.startTime} sectionindex={specialKey} wordindex={i} endtime={el.endTime} key={specialKey.toString() + i.toString()}>{el.formatted + " "}</span>
             })}
     </div>}
     </> 

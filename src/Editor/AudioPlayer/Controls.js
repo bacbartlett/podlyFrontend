@@ -29,14 +29,6 @@ const Controls = (props) =>{
         props.setClickedTime(document.getElementById("audio").currentTime + 30 )
     }
 
-    const handleGoToNextSong = () => {
-        console.log("Needs to be changed in controls")
-    }
-
-    const handleGoToPreviousSong = () => {
-        console.log("Needs to be changed in controls")
-        
-    }
 
     return (
         <div className="AudioPlayer__Controls AudioPlayer__Section">

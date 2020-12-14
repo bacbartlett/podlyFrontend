@@ -64,13 +64,13 @@ function App() {
       <Route exact={true} path="/podcaster">
         <PodcasterHomepage />
       </Route>
-      <Route exact={true} path="/podcaster/myPodcasts">
+      <Route exact={true} path="/podcaster">
         <MyPodcasts />
       </Route>
       <Route exact={true} path="/podcaster/podcasts/:id">
         <PodcastDisplayWrapper />
       </Route>
-      <Route exact={true} path="/podcaster/podcasts/:id/newtranscript">
+      <Route exact={true} path="/podcaster/podcasts/:id/newtranscript/:title">
         <NewTranscriptForm />
       </Route>
       <Route exact={true} path="/transcriber">

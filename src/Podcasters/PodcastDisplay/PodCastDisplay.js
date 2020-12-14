@@ -16,10 +16,10 @@ const PodcastDisplay = (props) =>{
         }
     }
 
-    const createNewTranscriptLink = (mediaurl) =>{
+    const createNewTranscriptLink = (mediaurl, title) =>{
         return () => {
             dispatch(setMediaUrl(mediaurl))
-            history.push(`/podcaster/podcasts/${id}/newtranscript`)
+            history.push(`/podcaster/podcasts/${id}/newtranscript/${title}`)
         }
     }
 
@@ -39,7 +39,7 @@ const PodcastDisplay = (props) =>{
                 <div className="podcastEpisode" key={i}>
                     <h4>{el.title}</h4>
                     <p>{el.pubDate}</p>
-                    {!el.status ? <button onClick={createNewTranscriptLink(el.enclosure.url)}>Transcribe this</button> : el.transcriptId ? <button onClick={createToTranscriptLink(el.transcriptId)}>View Transcript</button> : <button>Transcript Pending</button>}
+                    {!el.status ? <button onClick={createNewTranscriptLink(el.enclosure.url, el.title)}>Transcribe this</button> : el.transcriptId ? <button onClick={createToTranscriptLink(el.transcriptId)}>View Transcript</button> : <button>Transcript Pending</button>}
                 </div>
             )
         })}

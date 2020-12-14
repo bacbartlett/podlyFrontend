@@ -4,23 +4,30 @@ import Text from "./Text/Text"
 import SpeakerSection from "./SpeakerSection/SpeakerSection"
 import { useDispatch, useSelector } from "react-redux"
 import {updateAudioIsLoaded} from "../Store/actions"
+import { useHistory, useParams } from "react-router"
+import { TextsmsTwoTone } from "@material-ui/icons"
 
 const Editor = (props) =>{
+    const history = useHistory()
     const dispatch = useDispatch()
+    const {transcriptId} = useParams()
     const {data, speakerOptions} = props
     const words = data.data
+    console.log("In editor!!!!", words.length)
     const updateWordArr = useSelector(state=>state.updateWordArr)
     const updateAudioIsLoadedSLice = useSelector(state=>state.updateAudioIsLoaded)
 
     const [sections, setSections] = useState([])
     const [wordIndex, setWordIndex] = useState([])
-    const [currentlySelection, setCurrentlySelected] = useState([0,0])
     const [allWords, setAllWords] = useState([])
     const [editorMode, setEditorMode] = useState(0)
     const [openLocalTextMenu, setOpenLocalTextMenu] = useState(false)
+    const [moveSelected, setMoveSelected] = useState(0)
+    const [submitting, setSubmitting] = useState(false)
 
     //On mount, set up sections
     useEffect(()=>{
+        console.log("Use effect is running")
         const tempSections = []
         let tempSection = []
         let currentSpeaker = words[0].speaker
@@ -32,7 +39,11 @@ const Editor = (props) =>{
                 currentSpeaker = word.speaker
             }
             tempSection.push(word)
+            
+
         }
+        tempSections.push(tempSection)
+        console.log("TEMP SECTIONS:", tempSections)
         setSections(tempSections)
     }, [])
 
@@ -93,7 +104,6 @@ const Editor = (props) =>{
     useEffect(()=>{
 
         const handleLocalTextChange = (name, selected) =>{
-            //console.log(selected, selected.toString(), selected.innerHTML)
             const nodesInSection = selected.baseNode.parentNode.parentNode.childNodes
             const before = []
             const toChange = []
@@ -115,7 +125,6 @@ const Editor = (props) =>{
                     current = after
                 }
             }
-            console.log(before, toChange, after)
             const tempSections = [...sections]
             const indexToEdit = toChange[0].getAttribute("sectionindex")
             const sectionToEdit = sections[indexToEdit]
@@ -152,7 +161,6 @@ const Editor = (props) =>{
         }
 
         const closeMenu = () =>{
-            console.log("closing")
             document.querySelectorAll(".localSpeakerContextBox").forEach((el)=>{
                 document.querySelector("body").removeChild(el)
             })
@@ -188,8 +196,44 @@ const Editor = (props) =>{
             return
         }
         editorPage.addEventListener("mouseup", handleMouseUp)
+    })
 
-        return ()=>{document.getElementById("editorPage").removeEventListener("mouseup", handleMouseUp)}
+    useEffect(()=>{
+        if(editorMode === 2){
+            const selected = document.querySelector(".Editor__SelectedWord")
+            const r = new Range()
+            r.setStart(selected.childNodes[0], 0)
+            r.setEnd(selected.childNodes[0], selected.innerHTML.length)
+            const selection = window.getSelection()
+            selection.collapse(null)
+            selection.addRange(r)
+        }
+    }, [editorMode, moveSelected])
+
+    useEffect(()=>{
+        const moveSelectorWord = (e) =>{
+            if(editorMode === 0 && !document.getElementById("audio").paused){
+                return
+            }
+            if(e.key === "ArrowRight"){
+                const selected = document.querySelector(".Editor__SelectedWord")
+                selected.classList.remove("Editor__SelectedWord")
+                allWords[parseInt(selected.getAttribute("totalwordindex")) + 1].classList.add("Editor__SelectedWord")
+                setMoveSelected(moveSelected+1)
+            } else if(e.key === "ArrowLeft"){
+                const selected = document.querySelector(".Editor__SelectedWord")
+                selected.classList.remove("Editor__SelectedWord")
+                allWords[parseInt(selected.getAttribute("totalwordindex")) - 1].classList.add("Editor__SelectedWord")
+                setMoveSelected(moveSelected+1)
+            }
+        }
+
+        document.querySelector("body").addEventListener("keydown", moveSelectorWord)
+
+        return () => {
+            document.querySelector("body").removeEventListener("keydown", moveSelectorWord)
+        }
+
     })
 
 
@@ -227,18 +271,52 @@ const Editor = (props) =>{
         return <p>Loading</p>
     }
 
+    const submitTranscript = (e) =>{
+        const completedTranscript = []
+        for(let i = 0; i < allWords.length; i++){
+            const wordNode = allWords[i]
+            const word = {
+                startTime: wordNode.getAttribute("starttime"),
+                endTime: wordNode.getAttribute("endTime"),
+                speaker: wordNode.getAttribute("speaker"),
+                formatted: wordNode.innerHTML.replace(/&nbsp;/g,' ')
+            }
+            completedTranscript.push(word)
+        }
+        console.log("FROM SUBMIT!!!!!!!!", completedTranscript)
+        const submit = async ()=>{
+            const res = await fetch("/transcriber/transcription/" + transcriptId, {
+               method: "POST",
+               headers: {
+                   "Content-Type": "application/json"
+               },
+               body: JSON.stringify({data:completedTranscript})
+            })
+            const data = await res.json()
+            if(data.msg === "Success"){
+                history.goBack()
+            }
+        }
+        submit()
+        setSubmitting(true)
+       
+    }
+
     return(
         <div className="editorPage" id="editorPage">
             <h2>Editor</h2>
-            <AudioPlayerWrapper keepWithTime={keepWithTime} />
+            <AudioPlayerWrapper editorMode={editorMode} setEditorMode={setEditorMode} keepWithTime={keepWithTime} />
             {sections.map((el, i) => {
                 return(
                     <div className="section" key={i}>
                         <SpeakerSection changeSectionSpeaker={changeSectionSpeaker} speakerList={speakerOptions} number={i} speaker={el[0].speaker} sections={sections} stateUpdater={changeSpeaker} />
-                        <Text text={el} specialKey={i} editorMode={editorMode} />
+                        <Text text={el} speaker={el[0].speaker} specialKey={i} editorMode={editorMode} />
                     </div>
                 )
             })}
+            <br />
+            <br />
+            {submitting ? <button>Please Wait</button> : <button onClick={submitTranscript}>Submit Transcript</button>}
         </div>
     )
 

@@ -1,5 +1,6 @@
 @import "./normalize.css";
 @import "./Editor/AudioPlayer/AudioPlayer.css";
+@import "./Homepage/homepage.css";
 
 html{
     height: 100%;
@@ -7,10 +8,37 @@ html{
 
 
 .NavBar{
-    height: 75px;
+    height: 55px;
     background-color: #1cb3ff;
     color: white;
     width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.NavBar__Link{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    cursor: pointer;
+    background-color: #1cb3ff;
+    width: 100%;
+}
+
+.NavBar__Loginandsignout{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    cursor: pointer;
+    background-color: #1cb3ff;
+    width: 100%;
+}
+
+.NavBar__Link:hover{
+    background-color: #0084c6;
 }
 
 .Editor__SelectedWord{
@@ -26,7 +54,7 @@ html{
 }
 
 .speakerClickContextBox, .localSpeakerContextBox{
-    position: absolute;
+    position: fixed;
 }
 
 .speakerOption{

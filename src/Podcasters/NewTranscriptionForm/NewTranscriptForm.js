@@ -6,7 +6,7 @@ import { useHistory, useParams } from "react-router";
 import {clearMediaUrl} from "../../Store/actions"
 
 const NewTranscriptForm = (props) =>{
-    const {id} = useParams()
+    const {id, title} = useParams()
     const dispatch = useDispatch()
     const mediaUrl = useSelector(state=>state.mediaUrl)
     const history = useHistory()
@@ -33,7 +33,7 @@ const NewTranscriptForm = (props) =>{
         getAllBoxes.forEach((el)=>{
             speakers.push(el.value)
         })
-        const prom = createNewTranscriptJob(mediaUrl, id, speakers)
+        const prom = createNewTranscriptJob(mediaUrl, id, speakers, title)
         prom.then(val=> {
             dispatch(val);
             history.goBack()

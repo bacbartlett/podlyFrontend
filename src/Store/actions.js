@@ -141,7 +141,7 @@ export const clearMediaUrl = () =>{
     }
 }
 
-export const createNewTranscriptJob = async (mediaLink, podcastId, speakerNames) =>{
+export const createNewTranscriptJob = async (mediaLink, podcastId, speakerNames, title) =>{
     const res = await fetch(`/podcaster/podcasts/${podcastId}/newJob`, {
         method: "POST",
         headers: {
@@ -149,7 +149,8 @@ export const createNewTranscriptJob = async (mediaLink, podcastId, speakerNames)
         },
         body: JSON.stringify({
             mediaUrl: mediaLink,
-            speakerNames
+            speakerNames,
+            title
         })
     })
     const data = await res.json();
@@ -184,6 +185,7 @@ export const clearTranscripts = () =>{
 export const getEditorData = async (id) =>{
     const res = await fetch("/transcriber/transcription/" + id)
     const data = await res.json()
+    console.log("I AM IN THE ACTION:", data.data.length)
     if(data.msg){
         return{
             type: SET_ERROR,

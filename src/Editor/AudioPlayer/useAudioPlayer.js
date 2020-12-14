@@ -2,7 +2,7 @@ import {useState, useEffect} from "react";
 import { useDispatch } from "react-redux";
 import {updateAudioIsLoaded} from "../../Store/actions"
 
-const useAudioPlayer = (podcast, keepWithTime) =>{
+const useAudioPlayer = (podcast, keepWithTime, editorMode, setEditorMode) =>{
     const dispatch = useDispatch()
     //const [length, setLegth] = useState(podcast.length);
     const [length, setLegth] = useState(0);
@@ -32,11 +32,29 @@ const useAudioPlayer = (podcast, keepWithTime) =>{
             //
         }
 
-        
+        const spaceToPause = (e) =>{
+            if(e.key === " " && editorMode === 0){
+                setPlaying(!playing)
+            }
+        }
+
+        const enterToChangeEditorMode = (e) => {
+            if(e.key === "Enter"){
+                if(editorMode === 0){
+                    setPlaying(false)
+                    setEditorMode(2)
+                } else{
+                    setPlaying(true)
+                    setEditorMode(0)
+                }
+            }
+        }
 
         audio.addEventListener("loadeddata", setAudioData);
         audio.addEventListener("timeupdate", keepWithTime);
         audio.addEventListener("timeupdate", setAudioTime);
+        document.querySelector("body").addEventListener("keypress", spaceToPause)
+        document.querySelector("body").addEventListener("keypress", enterToChangeEditorMode)
 
         if(playing){
             audio.play();
@@ -53,6 +71,8 @@ const useAudioPlayer = (podcast, keepWithTime) =>{
             audio.removeEventListener("loadeddata", setAudioData);
             audio.removeEventListener("timeupdate", setAudioTime);
             audio.removeEventListener("timeupdate", keepWithTime)
+            document.querySelector("body").removeEventListener("keypress", spaceToPause)
+            document.querySelector("body").removeEventListener("keypress", enterToChangeEditorMode)
         }
     });
 

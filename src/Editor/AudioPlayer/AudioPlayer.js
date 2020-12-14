@@ -5,7 +5,7 @@ import Volume from "./Volume";
 import Bar from "./Bar";
 
 const AudioPlayer = (props) =>{
-    const {currentTime, length, playing, setPlaying, setClickedTime, makeSetAudioVolume} = useAudioPlayer(props.podcast, props.keepWithTime)
+    const {currentTime, length, playing, setPlaying, setClickedTime, makeSetAudioVolume} = useAudioPlayer(props.podcast, props.keepWithTime, props.editorMode, props.setEditorMode)
     if(!props.podcast || !props.podcast.length){
         return null
     }
