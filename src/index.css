@@ -1,6 +1,9 @@
 @import "./normalize.css";
 @import "./Editor/AudioPlayer/AudioPlayer.css";
 @import "./Homepage/homepage.css";
+@import "./Displays/PodcastDisplay/podcastDisplay.css";
+@import "./Displays//EpisodeDisplay/EpisodeDisplay.css";
+@import "./Editor/Editor.css";
 
 html{
     height: 100%;

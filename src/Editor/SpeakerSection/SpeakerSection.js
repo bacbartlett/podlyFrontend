@@ -81,7 +81,7 @@ const SpeakerSection = (props) =>{
     return(
         <>
         <div className="speakerSecontion" id={`speakerSection${number}`}>
-            <h3>{speakerName}:</h3>
+            {speakerName + ":"}
         </div>
         </>
     )

@@ -1,0 +1,35 @@
+.episodeDisplay{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.episodeDisplay__Episode{
+    width: 80%;
+    min-height: 150px;
+    display: grid;
+    grid-template-columns: 150px 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    margin: 25px 0;
+    background-color: #EFEFEF;
+}
+
+.episodeDisplay__Episode:hover{
+    background-color: #E4E4E4;
+}
+
+.episodeDisplay__image{
+    background-size: contain;
+    width: 150px;
+    height: 150px;
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+.episodeDisplay__data{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin: 0 0 0 15px;
+}

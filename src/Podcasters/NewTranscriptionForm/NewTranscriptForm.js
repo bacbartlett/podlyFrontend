@@ -50,8 +50,8 @@ const NewTranscriptForm = (props) =>{
                 )
             })}
             <br/>
-            <button onClick={addSpeaker}>Add Speaker</button>
-            {loading ? <button>Pending</button> : <button onClick={submit}>Submit</button>}
+            <button key={100} onClick={addSpeaker}>Add Speaker</button>
+            {loading ?  <button key={101}>Pending</button> : <button key={102} onClick={submit}>Submit</button>}
         </div>
         
     )

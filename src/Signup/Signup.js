@@ -104,7 +104,7 @@ const Signup = (props) =>{
                 </> : null
             }
             </div>
-            <button className="submitButton" onClick={submitDetails}>Login</button>
+            <button className="submitButton" onClick={submitDetails}>Signup</button>
         </div>
         
     )

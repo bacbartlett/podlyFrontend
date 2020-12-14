@@ -15,6 +15,8 @@ import DefaultNav from "./NavBar/DefaultNav/NavBar"
 import { SET_USER } from './Store/actions';
 import MyPodcasts from "./Podcasters/MyPodcasts/MyPodcasts"
 import NewTranscriptForm from "./Podcasters/NewTranscriptionForm/NewTranscriptForm"
+import AllPodcastWrapper from "./Researcher/AllPodcasts/AllPodcastsWrapper"
+import TranscriptViewerWrapper from "./TranscriptViewer/WrapperTranscriptViewer"
 
 function App() {
   const dispatch = useDispatch()
@@ -79,8 +81,14 @@ function App() {
       <Route exact={true} path="/researcher">
         <ResearcherHomepage />
       </Route>
+      <Route exact={true} path={"/podcasts"}>
+        <AllPodcastWrapper />
+      </Route>
       <Route exact={true} path="/transcriber/transcribe/:transcriptId">
         <EditorWrapper />
+      </Route>
+      <Route exact={true} path="/transcript/:transcriptId">
+          <TranscriptViewerWrapper />
       </Route>
     </Router>
   );

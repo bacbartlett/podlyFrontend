@@ -1,0 +1,17 @@
+.section{
+    margin: 15px;
+    display: grid;
+    grid-template-columns: 75px 1fr;
+    background-color: #F8F8F8;
+    padding: 15px;
+}
+
+.section:hover{
+    background-color: #F1F1F1;
+}
+
+.speakerSecontion{
+    font-size: 22px;
+    align-items: center;
+    display: flex;
+}

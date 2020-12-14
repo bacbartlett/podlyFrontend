@@ -19,12 +19,15 @@ export const UPDATE_WORDARR = "UPDATE_WORDARR"
 export const UPDATE_AUDIOISLOADED = "UPDATE_AUDIOISLOADED"
 export const UPDATE_SECTIONS = "UPDATE_SECTIONS"
 export const CLEAR_SECTIONS = "CLEAR_SECTIONS"
+export const SET_PODCASTDISPLAY = "SET_PODCASTDISPLAY"
+export const CLEAR_PODCASTS = "CLEAR_PODCASTS"
 
 
 
 export const getPodcast = async (podcastId) =>{
     const res = await fetch("/podcaster/podcasts/" + podcastId)
     const data = await res.json()
+    console.log(data)
     return{type: GET_PODCAST, payload: data}
     
 }
@@ -226,6 +229,16 @@ export const updateSections = (val) =>{
 export const clearSections = () =>{
     return{
         type: CLEAR_SECTIONS
+    }
+}
+
+export const getALlPodcasts = async (pageNum) =>{
+    console.log("RUNNING THIS")
+    const res = await fetch("/researcher/researching/allPodcasts/" + pageNum)
+    const data = await res.json()
+    return{
+        type: SET_PODCASTDISPLAY,
+        payload: data
     }
 }
 

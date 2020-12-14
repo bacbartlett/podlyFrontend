@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router"
 import {getTranscripts, clearTranscripts} from "../../../Store/actions"
+import EpisodeDisplay from "../../../Displays/EpisodeDisplay/EpisodeDisplay"
 
 const TranscriptDisplay = (props) =>{
     const dispatch = useDispatch()
@@ -31,15 +32,18 @@ const TranscriptDisplay = (props) =>{
     if(!stateTranscripts.length){
         return <p>Loading</p>
     }else{
+        // return(
+        //     <div className="TranscriptPage">
+        //         {stateTranscripts.map((el, i)=>{
+        //             return(<div className="neededTranscript" key={i} onClick={createClickFunction(el.id)}>
+        //                 <h4>{el.title}</h4>
+        //                 <p>From: {el.podcastName}</p>
+        //             </div>)
+        //         })}
+        //     </div>
+        // )
         return(
-            <div className="TranscriptPage">
-                {stateTranscripts.map((el, i)=>{
-                    return(<div className="neededTranscript" key={i} onClick={createClickFunction(el.id)}>
-                        <h4>{el.title}</h4>
-                        <p>From: {el.podcastName}</p>
-                    </div>)
-                })}
-            </div>
+            <EpisodeDisplay episodes={transcripts} clickStub={"/transcriber/transcribe"} title={"Open Jobs"} transcribeButton={false} />
         )
     }
 }

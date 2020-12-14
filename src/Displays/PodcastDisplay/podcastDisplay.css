@@ -1,0 +1,41 @@
+.center{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.podcastDisplay{
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.podcastDisplayAdjuster{
+    margin: 25px;
+}
+
+.podcastDisplay__Image{
+    height: 300px;
+    width: 300px;
+    background-size: contain;
+
+}
+
+.podcastDisplay__Title{
+    opacity: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.podcastDisplay__Title:hover{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    opacity: .8;
+    color: white;
+    width: 100%;
+    height: 100%;
+    font-size: 45px;
+}
