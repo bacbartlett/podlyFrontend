@@ -26,7 +26,7 @@ function App() {
     const type = localStorage.getItem("type")
     if(type){
       const loginUsingToken = async() =>{
-        const res = await fetch(`${baseUrl}/${type.toLowerCase()}/token`)
+        const res = await fetch(`/${type.toLowerCase()}/token`)
         const data = await res.json()
         if(data.msg){
           return
