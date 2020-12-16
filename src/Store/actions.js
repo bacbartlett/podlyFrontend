@@ -64,8 +64,8 @@ export const setUser = async (type, email, password) =>{
     if(data.msg){
         return setError(data.msg)
     }
-    //localStorage.setItem("token", data.token)
-    document.cookie = `loginToken=${data.token}`;
+    localStorage.setItem("token", data.token)
+    document.cookie = `loginToken=${data.token}; SameSite=None; Secure`;
     localStorage.setItem("type", type)
     return {
         type: SET_USER,
@@ -85,7 +85,7 @@ export const signupUser = async (type, email, password, firstName, lastName) =>{
     if(data.msg){
         return setError(data.msg)
     }
-    // localStorage.setItem("token", data.token)
+    localStorage.setItem("token", data.token)
     document.cookie = `loginToken=${data.token}`;
     localStorage.setItem("type", type)
     return {
@@ -103,7 +103,8 @@ export const removeUser = () =>{
 
 export const setMyPodcasts = async ()=>{
     const res = await fetch(baseUrl + `/podcaster/podcasts/mypodcasts`,{
-        credentials: "include"
+        credentials: "include",
+        mode: "cors"
     })
     const data = await res.json()
     return {
