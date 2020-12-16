@@ -33,6 +33,7 @@ const NewTranscriptForm = (props) =>{
         getAllBoxes.forEach((el)=>{
             speakers.push(el.value)
         })
+        console.log("!!!!!", mediaUrl, id, speakers, title, "!!!!!!")
         const prom = createNewTranscriptJob(mediaUrl, id, speakers, title)
         prom.then(val=> {
             dispatch(val);

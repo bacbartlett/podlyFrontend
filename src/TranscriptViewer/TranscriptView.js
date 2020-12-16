@@ -131,7 +131,7 @@ const TranscriptViewer = (props) =>{
 
     return(
         <div className="editorPage" id="editorPage">
-            <h2>Editor</h2>
+            <h2>Transcript Viewer</h2>
             <AudioPlayerWrapper keepWithTime={keepWithTime} />
             {sections.map((el, i) => {
                 return(

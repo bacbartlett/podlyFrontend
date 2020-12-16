@@ -1,7 +1,7 @@
 .section{
     margin: 15px;
     display: grid;
-    grid-template-columns: 75px 1fr;
+    grid-template-columns: 100px 1fr;
     background-color: #F8F8F8;
     padding: 15px;
 }
