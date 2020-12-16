@@ -102,7 +102,9 @@ export const removeUser = () =>{
 }
 
 export const setMyPodcasts = async ()=>{
-    const res = await fetch(baseUrl + `/podcaster/podcasts/mypodcasts`)
+    const res = await fetch(baseUrl + `/podcaster/podcasts/mypodcasts`,{
+        credentials: "include"
+    })
     const data = await res.json()
     return {
         type: SET_MYPODCASTS,
