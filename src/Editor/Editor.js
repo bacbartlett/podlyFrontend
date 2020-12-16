@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux"
 import {updateAudioIsLoaded} from "../Store/actions"
 import { useHistory, useParams } from "react-router"
 import { TextsmsTwoTone } from "@material-ui/icons"
+import {baseUrl} from "../config"
 
 const Editor = (props) =>{
     const history = useHistory()
@@ -285,7 +286,7 @@ const Editor = (props) =>{
         }
         console.log("FROM SUBMIT!!!!!!!!", completedTranscript)
         const submit = async ()=>{
-            const res = await fetch("/transcriber/transcription/" + transcriptId, {
+            const res = await fetch(baseUrl + "/transcriber/transcription/" + transcriptId, {
                method: "POST",
                headers: {
                    "Content-Type": "application/json"

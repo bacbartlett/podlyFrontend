@@ -1,4 +1,5 @@
 import { useDispatch } from "react-redux"
+import {baseUrl} from "../config"
 
 
 export const GET_PODCAST = "GET_PODCAST"
@@ -25,7 +26,7 @@ export const CLEAR_PODCASTS = "CLEAR_PODCASTS"
 
 
 export const getPodcast = async (podcastId) =>{
-    const res = await fetch("/podcaster/podcasts/" + podcastId)
+    const res = await fetch(baseUrl + "/podcaster/podcasts/" + podcastId)
     const data = await res.json()
     console.log(data)
     return{type: GET_PODCAST, payload: data}
@@ -52,7 +53,7 @@ export const clearError = () =>{
 }
 
 export const setUser = async (type, email, password) =>{
-    const res = await fetch(`/${type.toLowerCase()}/login`, {
+    const res = await fetch(baseUrl + `/${type.toLowerCase()}/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -73,7 +74,7 @@ export const setUser = async (type, email, password) =>{
 }
 
 export const signupUser = async (type, email, password, firstName, lastName) =>{
-    const res = await fetch(`/${type.toLowerCase()}/signup`, {
+    const res = await fetch(baseUrl + `/${type.toLowerCase()}/signup`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -101,7 +102,7 @@ export const removeUser = () =>{
 }
 
 export const setMyPodcasts = async ()=>{
-    const res = await fetch(`/podcaster/podcasts/mypodcasts`)
+    const res = await fetch(baseUrl + `/podcaster/podcasts/mypodcasts`)
     const data = await res.json()
     return {
         type: SET_MYPODCASTS,
@@ -117,7 +118,7 @@ export const clearMyPodcasts = () =>{
 }
 
 export const setNewPodcast = async (rssFeedUrl)=>{
-    const res = await fetch("/podcaster/podcasts/new", {
+    const res = await fetch(baseUrl + "/podcaster/podcasts/new", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -145,7 +146,7 @@ export const clearMediaUrl = () =>{
 }
 
 export const createNewTranscriptJob = async (mediaLink, podcastId, speakerNames, title) =>{
-    const res = await fetch(`/podcaster/podcasts/${podcastId}/newJob`, {
+    const res = await fetch(baseUrl + `/podcaster/podcasts/${podcastId}/newJob`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -163,7 +164,7 @@ export const createNewTranscriptJob = async (mediaLink, podcastId, speakerNames,
             payload: "There was a problem processing this transcription. Please try again later"
         }
     }
-    // const res2 = await fetch(`/podcaster/podcast/${podcastId}`)
+    // const res2 = await fetch(baseUrl + `/podcaster/podcast/${podcastId}`)
     // const data2 = res2.json()
     // return{type: GET_PODCAST, payload: data2}
     return clearMediaUrl()
@@ -171,7 +172,7 @@ export const createNewTranscriptJob = async (mediaLink, podcastId, speakerNames,
 }
 
 export const getTranscripts = async() =>{
-    const res = await fetch("/transcriber/openprojects")
+    const res = await fetch(baseUrl + "/transcriber/openprojects")
     const data = await res.json()
     return {
         type: SET_TRANSCRIPTS,
@@ -186,7 +187,7 @@ export const clearTranscripts = () =>{
 }
 
 export const getEditorData = async (id) =>{
-    const res = await fetch("/transcriber/transcription/" + id)
+    const res = await fetch(baseUrl + "/transcriber/transcription/" + id)
     const data = await res.json()
     console.log("I AM IN THE ACTION:", data.data.length)
     if(data.msg){
@@ -234,7 +235,7 @@ export const clearSections = () =>{
 
 export const getALlPodcasts = async (pageNum) =>{
     console.log("RUNNING THIS")
-    const res = await fetch("/researcher/researching/allPodcasts/" + pageNum)
+    const res = await fetch(baseUrl + "/researcher/researching/allPodcasts/" + pageNum)
     const data = await res.json()
     return{
         type: SET_PODCASTDISPLAY,

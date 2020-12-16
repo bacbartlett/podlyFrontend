@@ -17,6 +17,7 @@ import MyPodcasts from "./Podcasters/MyPodcasts/MyPodcasts"
 import NewTranscriptForm from "./Podcasters/NewTranscriptionForm/NewTranscriptForm"
 import AllPodcastWrapper from "./Researcher/AllPodcasts/AllPodcastsWrapper"
 import TranscriptViewerWrapper from "./TranscriptViewer/WrapperTranscriptViewer"
+import {baseUrl} from "./config"
 
 function App() {
   const dispatch = useDispatch()
@@ -25,7 +26,7 @@ function App() {
     const type = localStorage.getItem("type")
     if(type){
       const loginUsingToken = async() =>{
-        const res = await fetch(`/${type.toLowerCase()}/token`)
+        const res = await fetch(`${baseUrl}/${type.toLowerCase()}/token`)
         const data = await res.json()
         if(data.msg){
           return
