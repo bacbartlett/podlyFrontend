@@ -53,19 +53,26 @@ export const clearError = () =>{
 }
 
 export const setUser = async (type, email, password) =>{
+    console.log("Running the new one")
     const res = await fetch(baseUrl + `/${type.toLowerCase()}/login`, {
         method: "POST",
+        withCredentials: true,
+        credentials: 'include',
+        
         headers: {
+            'Authorization': "Bearer" + "12312312",
             "Content-Type": "application/json"
         },
+        credentials: "include",
         body: JSON.stringify({email, password})
     })
     const data = await res.json()
-    if(data.msg){
-        return setError(data.msg)
-    }
+    // if(data.msg){
+    //     return setError(data.msg)
+    // }
     localStorage.setItem("token", data.token)
-    document.cookie = `loginToken=${data.token}; SameSite=None; Secure`;
+    // console.log(data.token, "THIS IS THE TOKEN ABOUT TO BE SET IN COOOKIES")
+    // document.cookie = `loginToken=${data.token}`;
     localStorage.setItem("type", type)
     return {
         type: SET_USER,
@@ -103,6 +110,9 @@ export const removeUser = () =>{
 
 export const setMyPodcasts = async ()=>{
     const res = await fetch(baseUrl + `/podcaster/podcasts/mypodcasts`,{
+        headers:{
+            "Content-Type": "application/json"
+        },
         credentials: "include",
         mode: "cors"
     })
