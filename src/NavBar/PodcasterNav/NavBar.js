@@ -7,7 +7,7 @@ const NavBar = (props) =>{
     const dispatch = useDispatch()
     const history = useHistory()
     const logout = () =>{
-        document.cookie = "loginToken="
+        // document.cookie = "loginToken="
         history.push("/")
         dispatch(removeUser())
     }

@@ -27,8 +27,9 @@ function App() {
     if(type){
       const loginUsingToken = async() =>{
         const res = await fetch(baseUrl + `/${type.toLowerCase()}/token`, {
-          credentials: "include",
-          mode: "cors"
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
         })
         const data = await res.json()
         if(data.msg){
@@ -46,6 +47,7 @@ function App() {
     }
   },[])
   return (
+    <>
     <Router>
       <Switch>
         <Route exact={false} path="/podcaster">
@@ -95,6 +97,8 @@ function App() {
           <TranscriptViewerWrapper />
       </Route>
     </Router>
+    <a href="https://www.freepik.com/vectors/technology">Technology vector created by freepik - www.freepik.com</a>
+    </>
   );
 }
 

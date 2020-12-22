@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router"
 import {clearError, setUser} from "../Store/actions"
+import TextField from '@material-ui/core/TextField';
 
 const Login = (props) =>{
     const dispatch = useDispatch()
@@ -70,6 +71,20 @@ const Login = (props) =>{
         userDetails.then(val => dispatch(val))
     }
 
+    const demoLogin = () =>{
+        let email
+        let password = "password"
+        if (option === "Podcaster"){
+            email = "demoP@user.com"
+        } else if (option === "Transcriber"){
+            email = "demoT@user.com"
+        } else if (option === "Researcher"){
+            email = "demoR@user.com"
+        }
+        const userDetails = setUser(option, email, password)
+        userDetails.then(val=>dispatch(val))
+    }
+
     return(
         <div className="loginPage">
             <h1>Login</h1>
@@ -83,12 +98,11 @@ const Login = (props) =>{
                 {error}
             </div>
             <div className="loginForm">
-                <label>Email</label>
-                <input type="email" value={email} onChange={handleEmail}></input>
-                <label>Password</label>
-                <input type="password" value={password} onChange={handlePassword}></input>
+                <TextField id="email" type="email" value={email} onChange={handleEmail} label="Email" />
+                <TextField id="password" type="password" value={password} onChange={handlePassword} label="Password" />
             </div>
             <button className="submitButton" onClick={submitDetails}>Login</button>
+            <button className="demologin" onClick={demoLogin}>Demo User</button>
         </div>
         
     )

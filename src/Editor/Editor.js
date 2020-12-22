@@ -289,6 +289,7 @@ const Editor = (props) =>{
             const res = await fetch(baseUrl + "/transcriber/transcription/" + transcriptId, {
                method: "POST",
                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
                    "Content-Type": "application/json"
                },
                body: JSON.stringify({data:completedTranscript})

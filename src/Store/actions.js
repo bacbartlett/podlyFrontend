@@ -26,7 +26,11 @@ export const CLEAR_PODCASTS = "CLEAR_PODCASTS"
 
 
 export const getPodcast = async (podcastId) =>{
-    const res = await fetch(baseUrl + "/podcaster/podcasts/" + podcastId)
+    const res = await fetch(baseUrl + "/podcaster/podcasts/" + podcastId, {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+    })
     const data = await res.json()
     console.log(data)
     return{type: GET_PODCAST, payload: data}
@@ -53,17 +57,13 @@ export const clearError = () =>{
 }
 
 export const setUser = async (type, email, password) =>{
-    console.log("Running the new one")
+    console.log("Running the new one", email, password)
     const res = await fetch(baseUrl + `/${type.toLowerCase()}/login`, {
         method: "POST",
-        withCredentials: true,
-        credentials: 'include',
-        
         headers: {
-            'Authorization': "Bearer" + "12312312",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
             "Content-Type": "application/json"
-        },
-        credentials: "include",
+          },
         body: JSON.stringify({email, password})
     })
     const data = await res.json()
@@ -84,6 +84,7 @@ export const signupUser = async (type, email, password, firstName, lastName) =>{
     const res = await fetch(baseUrl + `/${type.toLowerCase()}/signup`, {
         method: "POST",
         headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
             "Content-Type": "application/json"
         },
         body: JSON.stringify({email, password, firstName, lastName})
@@ -93,7 +94,7 @@ export const signupUser = async (type, email, password, firstName, lastName) =>{
         return setError(data.msg)
     }
     localStorage.setItem("token", data.token)
-    document.cookie = `loginToken=${data.token}`;
+    //document.cookie = `loginToken=${data.token}`;
     localStorage.setItem("type", type)
     return {
         type: SET_USER,
@@ -102,6 +103,7 @@ export const signupUser = async (type, email, password, firstName, lastName) =>{
 }
 
 export const removeUser = () =>{
+    localStorage.setItem("token", "")
     return {
         type: REMOVE_USER,
         payload: {}
@@ -111,6 +113,7 @@ export const removeUser = () =>{
 export const setMyPodcasts = async ()=>{
     const res = await fetch(baseUrl + `/podcaster/podcasts/mypodcasts`,{
         headers:{
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
             "Content-Type": "application/json"
         },
         credentials: "include",
@@ -134,6 +137,7 @@ export const setNewPodcast = async (rssFeedUrl)=>{
     const res = await fetch(baseUrl + "/podcaster/podcasts/new", {
         method: "POST",
         headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
             "Content-Type": "application/json"
         },
         body: JSON.stringify({rssFeedUrl})
@@ -162,6 +166,7 @@ export const createNewTranscriptJob = async (mediaLink, podcastId, speakerNames,
     const res = await fetch(baseUrl + `/podcaster/podcasts/${podcastId}/newJob`, {
         method: "POST",
         headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
@@ -185,7 +190,11 @@ export const createNewTranscriptJob = async (mediaLink, podcastId, speakerNames,
 }
 
 export const getTranscripts = async() =>{
-    const res = await fetch(baseUrl + "/transcriber/openprojects")
+    const res = await fetch(baseUrl + "/transcriber/openprojects", {
+        headers:{
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+    })
     const data = await res.json()
     return {
         type: SET_TRANSCRIPTS,
@@ -200,7 +209,11 @@ export const clearTranscripts = () =>{
 }
 
 export const getEditorData = async (id) =>{
-    const res = await fetch(baseUrl + "/transcriber/transcription/" + id)
+    const res = await fetch(baseUrl + "/transcriber/transcription/" + id, {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+    })
     const data = await res.json()
     console.log("I AM IN THE ACTION:", data.data.length)
     if(data.msg){
@@ -248,7 +261,11 @@ export const clearSections = () =>{
 
 export const getALlPodcasts = async (pageNum) =>{
     console.log("RUNNING THIS")
-    const res = await fetch(baseUrl + "/researcher/researching/allPodcasts/" + pageNum)
+    const res = await fetch(baseUrl + "/researcher/researching/allPodcasts/" + pageNum, {
+        headers:{
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+    })
     const data = await res.json()
     return{
         type: SET_PODCASTDISPLAY,
