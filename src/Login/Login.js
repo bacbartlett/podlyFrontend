@@ -3,6 +3,11 @@ import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router"
 import {clearError, setUser} from "../Store/actions"
 import TextField from '@material-ui/core/TextField';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 const Login = (props) =>{
     const dispatch = useDispatch()
@@ -88,19 +93,22 @@ const Login = (props) =>{
     return(
         <div className="loginPage">
             <h1>Login</h1>
-            <label>Login as:</label>
-            <select value={option} onChange={handleChange}>
-                <option value="Podcaster">Podcaster</option>
-                <option value="Transcriber">Transcriber</option>
-                <option value="Researcher">Researcher</option>
-            </select>
+        <InputLabel id="demo-simple-select-label">Login Type</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={option}
+          onChange={handleChange}
+        >
+          <MenuItem value={"Podcaster"}>Podcaster</MenuItem>
+          <MenuItem value={"Transcriber"}>Transcriber</MenuItem>
+          <MenuItem value={"Researcher"}>Researcher</MenuItem>
+        </Select>
             <div className="error">
                 {error}
             </div>
-            <div className="loginForm">
                 <TextField id="email" type="email" value={email} onChange={handleEmail} label="Email" />
                 <TextField id="password" type="password" value={password} onChange={handlePassword} label="Password" />
-            </div>
             <button className="submitButton" onClick={submitDetails}>Login</button>
             <button className="demologin" onClick={demoLogin}>Demo User</button>
         </div>

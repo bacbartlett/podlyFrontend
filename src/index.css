@@ -73,3 +73,9 @@ html{
 .speakerOption:hover{
     background-color: whitesmoke;
 }
+
+.loginPage{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
