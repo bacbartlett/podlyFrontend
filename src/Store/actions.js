@@ -273,3 +273,48 @@ export const getALlPodcasts = async (pageNum) =>{
     }
 }
 
+export const getPendingTranscripts = async () =>{
+    const res = await fetch(baseUrl + "/podcaster/podcasts/pendingJobs", {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+    })
+    const data = await res.json()
+    return {
+        type: SET_TRANSCRIPTS,
+        payload: data
+    }
+}
+
+export const clearPendingTranscripts = () =>{
+    return {
+        type: CLEAR_TRANSCRIPTS
+    }
+}
+
+export const approveTranscript = async (id) =>{
+    const res = await fetch(baseUrl + "/podcaster/approveReject/" + id, {
+        method: "POST",
+        headers:{
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+        },
+        body: JSON.stringify({msg: "Approve"})
+    })
+    const data = await res.json()
+    return data
+}
+
+export const rejectTranscript = async (id) =>{
+    const res = await fetch(baseUrl + "/podcaster/approveReject/" + id, {
+        method: "POST",
+        headers:{
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+        },
+        body: JSON.stringify({msg: "Reject"})
+    })
+    const data = await res.json()
+    return data
+}
+

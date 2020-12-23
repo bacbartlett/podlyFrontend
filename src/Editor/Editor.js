@@ -3,7 +3,7 @@ import AudioPlayerWrapper from "./AudioPlayer/AudioPlayerWrapper"
 import Text from "./Text/Text"
 import SpeakerSection from "./SpeakerSection/SpeakerSection"
 import { useDispatch, useSelector } from "react-redux"
-import {updateAudioIsLoaded} from "../Store/actions"
+import {updateAudioIsLoaded, approveTranscript, rejectTranscript} from "../Store/actions"
 import { useHistory, useParams } from "react-router"
 import { TextsmsTwoTone } from "@material-ui/icons"
 import {baseUrl} from "../config"
@@ -17,6 +17,7 @@ const Editor = (props) =>{
     console.log("In editor!!!!", words.length)
     const updateWordArr = useSelector(state=>state.updateWordArr)
     const updateAudioIsLoadedSLice = useSelector(state=>state.updateAudioIsLoaded)
+    const typeOfUser = useSelector(state=>state.user.type)
 
     const [sections, setSections] = useState([])
     const [wordIndex, setWordIndex] = useState([])
@@ -304,6 +305,28 @@ const Editor = (props) =>{
        
     }
 
+    const approveT = () =>{
+        const prom = approveTranscript(transcriptId)
+        prom.then(val=>{
+            if(val.msg === "Success"){
+                history.goBack()
+            } else{
+                alert("An error has occured. Please try again later")
+            }
+        })
+    }
+
+    const rejectT = () =>{
+        const prom = rejectTranscript(transcriptId)
+        prom.then(val=>{
+            if(val.msg === "Success"){
+                history.goBack()
+            } else{
+                alert("An error has occured. Please try again later")
+            }
+        })
+    }
+
     return(
         <div className="editorPage" id="editorPage">
             <h2>Editor</h2>
@@ -318,7 +341,8 @@ const Editor = (props) =>{
             })}
             <br />
             <br />
-            {submitting ? <button>Please Wait</button> : <button onClick={submitTranscript}>Submit Transcript</button>}
+            {typeOfUser === "Podcaster" ? <><button onClick={approveT}>Approve Transcript</button> <button onClick={rejectT}>Reject Transcript</button> </>:
+            submitting ? <button>Please Wait</button> : <button onClick={submitTranscript}>Submit Transcript</button>}
         </div>
     )
 

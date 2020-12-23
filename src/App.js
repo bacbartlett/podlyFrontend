@@ -18,6 +18,7 @@ import NewTranscriptForm from "./Podcasters/NewTranscriptionForm/NewTranscriptFo
 import AllPodcastWrapper from "./Researcher/AllPodcasts/AllPodcastsWrapper"
 import TranscriptViewerWrapper from "./TranscriptViewer/WrapperTranscriptViewer"
 import {baseUrl} from "./config"
+import PendingTranscripts from "./Podcasters/PendingTranscripts/PendingTranscripts"
 
 function App() {
   const dispatch = useDispatch()
@@ -80,6 +81,9 @@ function App() {
       </Route>
       <Route exact={true} path="/podcaster/podcasts/:id/newtranscript/:title">
         <NewTranscriptForm />
+      </Route>
+      <Route exact={true} path="/podcaster/pendingjobs">
+        <PendingTranscripts />
       </Route>
       <Route exact={true} path="/transcriber">
         <TranscriberHomepage />
