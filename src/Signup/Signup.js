@@ -2,6 +2,11 @@ import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router"
 import {clearError, signupUser} from "../Store/actions"
+import TextField from '@material-ui/core/TextField';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import Button from '@material-ui/core/Button';
 
 const Signup = (props) =>{
     const dispatch = useDispatch()
@@ -81,30 +86,29 @@ const Signup = (props) =>{
     return(
         <div className="loginPage">
             <h1>Signup</h1>
-            <label>Login as:</label>
-            <select value={option} onChange={handleChange}>
-                <option value="Podcaster">Podcaster</option>
-                <option value="Transcriber">Transcriber</option>
-                <option value="Researcher">Researcher</option>
-            </select>
+            <InputLabel id="demo-simple-select-label">Login Type</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={option}
+          onChange={handleChange}
+        >
+          <MenuItem value={"Podcaster"}>Podcaster</MenuItem>
+          <MenuItem value={"Transcriber"}>Transcriber</MenuItem>
+          <MenuItem value={"Researcher"}>Researcher</MenuItem>
+        </Select>
             <div className="error">
                 {error}
             </div>
-            <div className="loginForm">
-                <label>Email</label>
-                <input type="email" value={email} onChange={handleEmail}></input>
-                <label>Password</label>
-                <input type="password" value={password} onChange={handlePassword}></input>
+            <TextField id="email" type="email" value={email} onChange={handleEmail} label="Email" />
+            <TextField id="password" type="password" value={password} onChange={handlePassword} label="Password" />
                 {podcasterSignup || transcriberSignup ? 
                 <>
-                <label>First Name</label>
-                <input type="text" value={firstName} onChange={handleFirstName}></input>
-                <label>Last Name</label>
-                <input type="text" value={lastName} onChange={handleLastName}></input>
+                <TextField id="firstName" type="text" value={firstName} onChange={handleFirstName} label="First Name" />
+                <TextField id="lastName" type="text" value={lastName} onChange={handleLastName} label="Last Name" />
                 </> : null
             }
-            </div>
-            <button className="submitButton" onClick={submitDetails}>Signup</button>
+            <Button variant="contained" className="submitButton" onClick={submitDetails}>Signup</Button>
         </div>
         
     )
