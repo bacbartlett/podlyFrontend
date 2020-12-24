@@ -54,7 +54,7 @@ const Editor = (props) =>{
         const tempWordIndex = []
         const tempAllWords = []
         for(let i = 0; i < words.length; i ++){
-            let secondIndex = Math.floor(words[i].getAttribute("starttime"))
+            let secondIndex = Math.floor(words[i].getAttribute("starttime") / 10)
             if(!tempWordIndex[secondIndex]){
                 tempWordIndex[secondIndex] = []
             }
@@ -72,11 +72,10 @@ const Editor = (props) =>{
     //this function needs to be threaded through so that it can find audio
     const keepWithTime = (e) =>{
         const selected = document.querySelectorAll(".Editor__SelectedWord")
-        //testcomment
         selected.forEach(el=>el.classList.remove("Editor__SelectedWord"))
 
         const currentTime = (Math.floor(e.target.currentTime * 100)) / 100
-        let currentIndex = Math.floor(currentTime)
+        let currentIndex = Math.floor(currentTime / 10)
         let wordsAtSecond = wordIndex[currentIndex]
         //finds words at the second prior if any
         let currentWord
@@ -96,6 +95,7 @@ const Editor = (props) =>{
                 break
             }
         }
+        
         currentWord.classList.add("Editor__SelectedWord")
     }
 
@@ -172,6 +172,8 @@ const Editor = (props) =>{
                 return
             }
             e.stopPropagation()
+            const open = document.querySelectorAll(".localSpeakerContextBox")
+            open.forEach(el=>el.remove())
             const div = document.createElement("div")
             document.querySelector("body").appendChild(div)
             div.classList.add("localSpeakerContextBox")

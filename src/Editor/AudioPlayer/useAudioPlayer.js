@@ -20,7 +20,6 @@ const useAudioPlayer = (podcast, keepWithTime, editorMode, setEditorMode) =>{
         if(!audio){
             return
         }
-        //dispatch(updateAudioIsLoaded(true))
 
         const setAudioData = () =>{
             setLegth(audio.duration);
@@ -71,6 +70,8 @@ const useAudioPlayer = (podcast, keepWithTime, editorMode, setEditorMode) =>{
             audio.currentTime = clickedTime;
             setClickedTime(null);
           } 
+
+
 
         return ()=>{
             audio.removeEventListener("loadeddata", setAudioData);

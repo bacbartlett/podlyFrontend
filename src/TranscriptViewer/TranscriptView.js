@@ -52,7 +52,7 @@ const TranscriptViewer = (props) =>{
         const tempWordIndex = []
         const tempAllWords = []
         for(let i = 0; i < words.length; i ++){
-            let secondIndex = Math.floor(words[i].getAttribute("starttime"))
+            let secondIndex = Math.floor(words[i].getAttribute("starttime")/10)
             if(!tempWordIndex[secondIndex]){
                 tempWordIndex[secondIndex] = []
             }
@@ -74,7 +74,7 @@ const TranscriptViewer = (props) =>{
         selected.forEach(el=>el.classList.remove("Editor__SelectedWord"))
 
         const currentTime = (Math.floor(e.target.currentTime * 100)) / 100
-        let currentIndex = Math.floor(currentTime)
+        let currentIndex = Math.floor(currentTime/10)
         let wordsAtSecond = wordIndex[currentIndex]
         //finds words at the second prior if any
         let currentWord
