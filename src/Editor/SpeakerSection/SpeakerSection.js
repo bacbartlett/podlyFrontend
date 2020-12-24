@@ -63,7 +63,6 @@ const SpeakerSection = (props) =>{
             e.target.addEventListener("click", handleClickOut)
         }
         const handleClickOut = (e) =>{
-            console.log("close menu")
             document.querySelector("html").removeEventListener("click", handleClickOut)
             const sections = document.querySelectorAll(".speakerSecontion")
             sections.forEach(el=>el.removeEventListener("click", handleClickOut))

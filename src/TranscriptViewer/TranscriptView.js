@@ -13,7 +13,6 @@ const TranscriptViewer = (props) =>{
     const {transcriptId} = useParams()
     const {data, speakerOptions} = props
     const words = data.data
-    console.log("In editor!!!!", words.length)
     const updateWordArr = useSelector(state=>state.updateWordArr)
     const updateAudioIsLoadedSLice = useSelector(state=>state.updateAudioIsLoaded)
 
@@ -42,7 +41,6 @@ const TranscriptViewer = (props) =>{
 
         }
         tempSections.push(tempSection)
-        console.log("TEMP SECTIONS:", tempSections)
         setSections(tempSections)
     }, [])
 

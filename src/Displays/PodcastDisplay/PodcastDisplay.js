@@ -6,7 +6,6 @@ import { useHistory } from "react-router"
 const PodcastDisplay = (props) =>{
     const {podcasts, clickStub, title} = props
     const {results, totalPages} = podcasts
-    console.log(results, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     const history = useHistory()
 
     const createClickFunction = (id) =>{

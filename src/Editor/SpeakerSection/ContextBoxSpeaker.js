@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ListDividers(props) {
   const classes = useStyles();
-    console.log(props.options)
   return (
     // <List component="nav"  className={classes.root} aria-label="mailbox folders">
     // {props.options.map((el, i)=>{

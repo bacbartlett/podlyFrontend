@@ -38,6 +38,10 @@ const useAudioPlayer = (podcast, keepWithTime, editorMode, setEditorMode) =>{
             }
         }
 
+        const pause = () =>{
+            setPlaying(false)
+        }
+
         const enterToChangeEditorMode = (e) => {
             if(e.key === "Enter"){
                 if(editorMode === 0){
@@ -53,6 +57,7 @@ const useAudioPlayer = (podcast, keepWithTime, editorMode, setEditorMode) =>{
         audio.addEventListener("loadeddata", setAudioData);
         audio.addEventListener("timeupdate", keepWithTime);
         audio.addEventListener("timeupdate", setAudioTime);
+        audio.addEventListener("ended", pause)
         document.querySelector("body").addEventListener("keypress", spaceToPause)
         document.querySelector("body").addEventListener("keypress", enterToChangeEditorMode)
 
@@ -72,6 +77,7 @@ const useAudioPlayer = (podcast, keepWithTime, editorMode, setEditorMode) =>{
             audio.removeEventListener("timeupdate", setAudioTime);
             audio.removeEventListener("timeupdate", keepWithTime)
             document.querySelector("body").removeEventListener("keypress", spaceToPause)
+            audio.removeEventListener("ended", pause)
             document.querySelector("body").removeEventListener("keypress", enterToChangeEditorMode)
         }
     });

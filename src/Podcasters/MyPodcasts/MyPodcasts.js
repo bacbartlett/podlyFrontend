@@ -38,7 +38,6 @@ const MyPodcasts = (props) =>{
             history.push("/podcaster/podcasts/" + id)
         }
     }
-    console.log(myPodcastsState)
     if(!myPodcastsState.results){
         return null
     }

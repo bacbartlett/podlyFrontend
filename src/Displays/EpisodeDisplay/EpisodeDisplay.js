@@ -5,8 +5,6 @@ const EpisodeDisplay = (props) =>{
     const {episodes, title, clickStub, transcribeButton, transcibeFunction} = props
     const history = useHistory()
 
-    console.log(episodes, "EPISODES")
-
     if(!episodes || !episodes.length){
         return <h2>Nothing to Display</h2>
     }

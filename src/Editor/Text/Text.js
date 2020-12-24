@@ -10,28 +10,38 @@ const Text = (props) =>{
     
     
     const reinsertMetaData = (e) =>{
+
         const spans = e.target.childNodes
         const results = []
+
+        const selected = document.querySelectorAll(".Editor__SelectedWord")
+        selected.forEach(el=>{
+            el.classList.remove("Editor__SelectedWord")
+        })
+
+        
         for(let i = 0; i < spans.length; i++){
             let inner = spans[i].innerHTML.split("")
             
-            if((inner.includes("<") && inner.includes(">"))){
-                const tempInner = []
-                let insideTheBrackets = false
-                for(let k = 0; k < inner.length; k++){
-                    if(inner[k]=== "<"){
-                        insideTheBrackets = true
-                    }
-                    if(!insideTheBrackets){
-                        tempInner.push(inner[k])
-                    }
-                    if(inner[k]=== ">"){
-                        insideTheBrackets = false
-                    }
-                }
-                inner = tempInner
-                spans[i].innerHTML = tempInner.join("")
-            }
+
+            //This was here to remove the highlighting, but removing the tag should work better
+            // if((inner.includes("<") && inner.includes(">"))){
+            //     const tempInner = []
+            //     let insideTheBrackets = false
+            //     for(let k = 0; k < inner.length; k++){
+            //         if(inner[k]=== "<"){
+            //             insideTheBrackets = true
+            //         }
+            //         if(!insideTheBrackets){
+            //             tempInner.push(inner[k])
+            //         }
+            //         if(inner[k]=== ">"){
+            //             insideTheBrackets = false
+            //         }
+            //     }
+            //     inner = tempInner
+            //     spans[i].innerHTML = tempInner.join("")
+            // }
             
 
 

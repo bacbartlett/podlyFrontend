@@ -70,7 +70,6 @@ const Login = (props) =>{
     const handleEmail = e => setEmail(e.target.value)
 
     const submitDetails = e =>{
-        console.log("GETTING HERE!!")
         const userDetails = setUser(option, email, password)
         userDetails.then(val => dispatch(val))
     }

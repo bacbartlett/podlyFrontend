@@ -19,6 +19,7 @@ import AllPodcastWrapper from "./Researcher/AllPodcasts/AllPodcastsWrapper"
 import TranscriptViewerWrapper from "./TranscriptViewer/WrapperTranscriptViewer"
 import {baseUrl} from "./config"
 import PendingTranscripts from "./Podcasters/PendingTranscripts/PendingTranscripts"
+import PodcastTranscripts from "./Researcher/PodcastTranscripts/PodcastTranscripts"
 
 function App() {
   const dispatch = useDispatch()
@@ -99,6 +100,9 @@ function App() {
       </Route>
       <Route exact={true} path="/transcript/:transcriptId">
           <TranscriptViewerWrapper />
+      </Route>
+      <Route exact={true} path={"/podcasts/:id"}>
+        <PodcastTranscripts />
       </Route>
     </Router>
     <a href="https://www.freepik.com/vectors/technology">Technology vector created by freepik - www.freepik.com</a>

@@ -14,7 +14,6 @@ const Editor = (props) =>{
     const {transcriptId} = useParams()
     const {data, speakerOptions} = props
     const words = data.data
-    console.log("In editor!!!!", words.length)
     const updateWordArr = useSelector(state=>state.updateWordArr)
     const updateAudioIsLoadedSLice = useSelector(state=>state.updateAudioIsLoaded)
     const typeOfUser = useSelector(state=>state.user.type)
@@ -29,7 +28,6 @@ const Editor = (props) =>{
 
     //On mount, set up sections
     useEffect(()=>{
-        console.log("Use effect is running")
         const tempSections = []
         let tempSection = []
         let currentSpeaker = words[0].speaker
@@ -45,7 +43,6 @@ const Editor = (props) =>{
 
         }
         tempSections.push(tempSection)
-        console.log("TEMP SECTIONS:", tempSections)
         setSections(tempSections)
     }, [])
 
@@ -274,6 +271,11 @@ const Editor = (props) =>{
     }
 
     const submitTranscript = (e) =>{
+        const selected = document.querySelectorAll(".Editor__SelectedWord")
+        selected.forEach(el=>{
+            el.classList.remove("Editor__SelectedWord")
+        })
+
         const completedTranscript = []
         for(let i = 0; i < allWords.length; i++){
             const wordNode = allWords[i]
@@ -285,7 +287,6 @@ const Editor = (props) =>{
             }
             completedTranscript.push(word)
         }
-        console.log("FROM SUBMIT!!!!!!!!", completedTranscript)
         const submit = async ()=>{
             const res = await fetch(baseUrl + "/transcriber/transcription/" + transcriptId, {
                method: "POST",

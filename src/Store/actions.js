@@ -32,7 +32,6 @@ export const getPodcast = async (podcastId) =>{
           }
     })
     const data = await res.json()
-    console.log(data)
     return{type: GET_PODCAST, payload: data}
     
 }
@@ -57,7 +56,6 @@ export const clearError = () =>{
 }
 
 export const setUser = async (type, email, password) =>{
-    console.log("Running the new one", email, password)
     const res = await fetch(baseUrl + `/${type.toLowerCase()}/login`, {
         method: "POST",
         headers: {
@@ -67,11 +65,10 @@ export const setUser = async (type, email, password) =>{
         body: JSON.stringify({email, password})
     })
     const data = await res.json()
-    // if(data.msg){
-    //     return setError(data.msg)
-    // }
+    if(data.msg){
+        return setError(data.msg)
+    }
     localStorage.setItem("token", data.token)
-    // console.log(data.token, "THIS IS THE TOKEN ABOUT TO BE SET IN COOOKIES")
     // document.cookie = `loginToken=${data.token}`;
     localStorage.setItem("type", type)
     return {
@@ -215,7 +212,6 @@ export const getEditorData = async (id) =>{
         }
     })
     const data = await res.json()
-    console.log("I AM IN THE ACTION:", data.data.length)
     if(data.msg){
         return{
             type: SET_ERROR,
@@ -260,7 +256,6 @@ export const clearSections = () =>{
 }
 
 export const getALlPodcasts = async (pageNum) =>{
-    console.log("RUNNING THIS")
     const res = await fetch(baseUrl + "/researcher/researching/allPodcasts/" + pageNum, {
         headers:{
             Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -316,5 +311,24 @@ export const rejectTranscript = async (id) =>{
     })
     const data = await res.json()
     return data
+}
+
+export const getTranscriptsForPodcast = async (id) =>{
+    const res = await fetch(baseUrl + "/researcher/researching/allEpisodes/" + id, {
+        headers:{
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+    })
+    const data = await res.json()
+    return {
+        type: SET_TRANSCRIPTS,
+        payload: data
+    }
+}
+
+export const clearTranscriptsForPodcast = () =>{
+    return {
+        type: CLEAR_TRANSCRIPTS
+    }
 }
 

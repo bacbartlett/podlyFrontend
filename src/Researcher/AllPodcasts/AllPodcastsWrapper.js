@@ -17,7 +17,6 @@ const AllPodcastWrapper = (props) =>{
     }, [])
 
     useEffect(()=>{
-        console.log("This is new", podcastDisplay)
         setToDisplay(podcastDisplay)
         
     }, [podcastDisplay])

@@ -54,7 +54,6 @@ export const myPodcastsReducer = (state=[], action) =>{
             return []
         }
         case SET_PODCASTDISPLAY:{
-            console.log(action)
             return action.payload
         }
         case CLEAR_PODCASTS:{
