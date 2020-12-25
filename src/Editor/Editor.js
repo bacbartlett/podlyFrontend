@@ -345,8 +345,8 @@ const Editor = (props) =>{
             })}
             <br />
             <br />
-            {typeOfUser === "Podcaster" ? <><Button onClick={approveT}>Approve Transcript</Button> <Button onClick={rejectT}>Reject Transcript</Button> </>:
-            submitting ? <Button>Please Wait</Button> : <Button onClick={submitTranscript}>Submit Transcript</Button>}
+            {typeOfUser === "Podcaster" ? <><Button variant={"contained"} onClick={approveT}>Approve Transcript</Button> <Button variant={"contained"} onClick={rejectT}>Reject Transcript</Button> </>:
+            submitting ? <Button variant={"contained"} >Please Wait</Button> : <Button variant={"contained"} onClick={submitTranscript}>Submit Transcript</Button>}
         </div>
     )
 

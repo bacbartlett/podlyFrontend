@@ -1,5 +1,6 @@
 import React from "react"
 import { useHistory } from "react-router"
+import Button from '@material-ui/core/Button';
 
 const EpisodeDisplay = (props) =>{
     const {episodes, title, clickStub, transcribeButton, transcibeFunction} = props
@@ -63,11 +64,11 @@ const EpisodeDisplay = (props) =>{
                             <div className="episodeDisplay__duration episodeDisplay__data">
                                 {el.duration}
                             </div>
-                            {(transcribeButton && (el.status === 0)) ? <button onClick={transcibeFunction(el.mediaUrl, el.title)}>Transcribe This Episode</button>: null}
-                            {(transcribeButton && (el.status === 1)) ? <button >Pending</button>: null}
-                            {(transcribeButton && (el.status === 2)) ? <button >Pending</button>: null}
-                            {(transcribeButton && (el.status === 3)) ? <button onClick={viewTranscript(el.id)}>Review Transcript</button>: null}
-                            {(transcribeButton && (el.status === 4)) ? <button onClick={viewTranscript(el.id)}>View Transcript</button>: null}
+                            {(transcribeButton && (el.status === 0)) ? <Button variant={"contained"} onClick={transcibeFunction(el.mediaUrl, el.title)}>Transcribe This Episode</Button>: null}
+                            {(transcribeButton && (el.status === 1)) ? <Button variant={"contained"}>Pending</Button>: null}
+                            {(transcribeButton && (el.status === 2)) ? <Button variant={"contained"}>Pending</Button>: null}
+                            {(transcribeButton && (el.status === 3)) ? <Button variant={"contained"} onClick={viewTranscript(el.id)}>Review Transcript</Button>: null}
+                            {(transcribeButton && (el.status === 4)) ? <Button variant={"contained"} onClick={viewTranscript(el.id)}>View Transcript</Button>: null}
                         </div>
                     )
                 })}
