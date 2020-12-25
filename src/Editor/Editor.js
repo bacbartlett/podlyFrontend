@@ -7,6 +7,7 @@ import {updateAudioIsLoaded, approveTranscript, rejectTranscript} from "../Store
 import { useHistory, useParams } from "react-router"
 import { TextsmsTwoTone } from "@material-ui/icons"
 import {baseUrl} from "../config"
+import Button from '@material-ui/core/Button';
 
 const Editor = (props) =>{
     const history = useHistory()
