@@ -21,6 +21,10 @@ const AllPodcastWrapper = (props) =>{
         
     }, [podcastDisplay])
 
+    if(toDisplay.msg){
+        return <h4>{toDisplay.msg}</h4>
+    }
+
     if(!toDisplay.results || !toDisplay.results.length){
         return(
             <p>Loading</p>

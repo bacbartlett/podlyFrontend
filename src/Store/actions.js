@@ -23,8 +23,6 @@ export const CLEAR_SECTIONS = "CLEAR_SECTIONS"
 export const SET_PODCASTDISPLAY = "SET_PODCASTDISPLAY"
 export const CLEAR_PODCASTS = "CLEAR_PODCASTS"
 
-
-
 export const getPodcast = async (podcastId) =>{
     const res = await fetch(baseUrl + "/podcaster/podcasts/" + podcastId, {
         headers: {
@@ -193,6 +191,9 @@ export const getTranscripts = async() =>{
         }
     })
     const data = await res.json()
+    if (!Object.keys(data).length){
+        data = {msg: "Nothing to display"}
+    }
     return {
         type: SET_TRANSCRIPTS,
         payload: data
@@ -217,6 +218,9 @@ export const getEditorData = async (id) =>{
             type: SET_ERROR,
             payload: data.msg
         }
+    }
+    if (!Object.keys(data).length){
+        data = {msg: "Nothing to display"}
     }
     return {
         type: GET_EDITORDATA,
@@ -262,6 +266,9 @@ export const getALlPodcasts = async (pageNum) =>{
         }
     })
     const data = await res.json()
+    if (!Object.keys(data).length){
+        data = {msg: "Nothing to display"}
+    }
     return{
         type: SET_PODCASTDISPLAY,
         payload: data
@@ -275,6 +282,9 @@ export const getPendingTranscripts = async () =>{
         }
     })
     const data = await res.json()
+    if (!Object.keys(data).length){
+        data = {msg: "Nothing to display"}
+    }
     return {
         type: SET_TRANSCRIPTS,
         payload: data
@@ -320,6 +330,9 @@ export const getTranscriptsForPodcast = async (id) =>{
         }
     })
     const data = await res.json()
+    if (!Object.keys(data).length){
+        data = {msg: "Nothing to display"}
+    }
     return {
         type: SET_TRANSCRIPTS,
         payload: data
