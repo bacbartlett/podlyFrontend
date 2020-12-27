@@ -5,6 +5,14 @@
     flex-direction: column;
 }
 
+.episodeDisplay__Speakers{
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 15px;
+    align-items: center;
+    margin-left: 15px;
+}
+
 .episodeDisplay__Episode{
     width: 80%;
     min-height: 150px;
@@ -13,6 +21,10 @@
     grid-template-rows: 1fr 1fr;
     margin: 25px 0;
     background-color: #EFEFEF;
+}
+
+.episodeDisplay__title{
+    font-style: italic;
 }
 
 .episodeDisplay__Episode:hover{

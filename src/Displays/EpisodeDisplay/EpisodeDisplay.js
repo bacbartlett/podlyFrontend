@@ -49,8 +49,8 @@ const EpisodeDisplay = (props) =>{
                             <div className="episodeDisplay__title episodeDisplay__data">
                                 {el.title}
                             </div>
-                            <div className="episodeDisplay__Speakers episodeDisplay__data">
-                                {el.Speakers.map((el, i)=>{
+                            <div className="episodeDisplay__Speakers">
+                                Speaker: {el.Speakers.map((el, i)=>{
                                     if(i>0){
                                         return `, ${el.name}`
                                     } else{
