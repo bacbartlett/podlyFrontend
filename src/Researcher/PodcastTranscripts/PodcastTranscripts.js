@@ -38,7 +38,7 @@ const PodcastTranscripts = (props) =>{
         return <p>Loading</p>
     }else{
         return(
-            <EpisodeDisplay episodes={transcripts} clickStub={"/transcriber/transcribe"} title={"Open Jobs"} transcribeButton={false} />
+            <EpisodeDisplay episodes={transcripts} clickStub={"/transcript"} title={"Open Jobs"} transcribeButton={false} />
         )
     }
 }

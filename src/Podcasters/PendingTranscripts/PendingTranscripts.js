@@ -29,6 +29,10 @@ const PendingTranscripts = (props) =>{
         }
     }
 
+    if(stateTranscripts.msg){
+        return <h4>{stateTranscripts.msg}</h4>
+    }
+
     if(!stateTranscripts.length){
         return <p>Loading</p>
     }else{

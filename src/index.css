@@ -7,6 +7,7 @@
 
 html{
     height: 100%;
+    font-family: 'Oswald', sans-serif;
 }
 
 
@@ -45,7 +46,7 @@ html{
 }
 
 .Editor__SelectedWord{
-    background-color: blue;
+    background-color: #1B4079;
     color: white
 }
 
