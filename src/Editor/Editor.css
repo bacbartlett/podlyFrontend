@@ -12,12 +12,19 @@
 }
 
 .speakerSecontion{
-    font-size: 22px;
     align-items: center;
+    padding-right: 10px;
+    font-size: 22px;
+    justify-content: center;
     display: flex;
+    flex-direction: column;
 }
 
 .Editor__Word{
     font-family: 'Open Sans', sans-serif;
     font-weight: 550;
+}
+
+.Editor__Title{
+    padding-left: 30px;
 }

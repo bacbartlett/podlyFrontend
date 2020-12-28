@@ -333,7 +333,7 @@ const Editor = (props) =>{
 
     return(
         <div className="editorPage" id="editorPage">
-            <h2>Editor</h2>
+            <h2 className="Editor__Title">{data.transcript.title}</h2>
             <AudioPlayerWrapper editorMode={editorMode} setEditorMode={setEditorMode} keepWithTime={keepWithTime} />
             {sections.map((el, i) => {
                 return(

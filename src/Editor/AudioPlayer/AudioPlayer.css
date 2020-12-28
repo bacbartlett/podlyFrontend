@@ -30,6 +30,7 @@
 
 
 .AudioPlayer__VolumeDiv{
+    padding-left: 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
