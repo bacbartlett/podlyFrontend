@@ -45,10 +45,6 @@ html{
     background-color: #0084c6;
 }
 
-.Editor__SelectedWord{
-    background-color: #1B4079;
-    color: white
-}
 
 .podcastCover{
     height: 300px;

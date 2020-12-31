@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import {getPodcast, clearPodcast} from "../../Store/actions"
 import { useHistory, useParams } from "react-router"
 import EpisodeDisplay from "../../Displays/EpisodeDisplay/EpisodeDisplay"
-import {setMediaUrl} from "../../Store/actions"
+import {setMediaUrl, createNewTranscriptJob} from "../../Store/actions"
 
 
 const PodcastDisplayWrapper = (props) =>{
@@ -21,8 +21,13 @@ const PodcastDisplayWrapper = (props) =>{
 
     const createNewTranscriptLink = (mediaurl, title) =>{
         return () => {
-            dispatch(setMediaUrl(mediaurl))
-            history.push(`/podcaster/podcasts/${id}/newtranscript/${title}`)
+            const prom = createNewTranscriptJob(mediaurl, id, [], title)
+            prom.then(val=>{
+                console.log("THIS IS THE ID", val)
+                dispatch(setMediaUrl(val))
+                history.push(`/podcaster/podcasts/${id}/newtranscript/${title}`)
+            })
+            
         }
     }
 

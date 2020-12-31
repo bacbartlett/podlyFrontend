@@ -8,6 +8,7 @@ import { useHistory, useParams } from "react-router"
 import { TextsmsTwoTone } from "@material-ui/icons"
 import {baseUrl} from "../config"
 import Button from '@material-ui/core/Button';
+import SpeakerDisplay from "../Displays/AddOrRemoveSpeakers/AddOrRemoveSpeakers"
 
 const Editor = (props) =>{
     const history = useHistory()
@@ -26,6 +27,7 @@ const Editor = (props) =>{
     const [openLocalTextMenu, setOpenLocalTextMenu] = useState(false)
     const [moveSelected, setMoveSelected] = useState(0)
     const [submitting, setSubmitting] = useState(false)
+    const [addSpeakerBox, setAddSpeakerBox] = useState(false)
 
     //On mount, set up sections
     useEffect(()=>{
@@ -184,10 +186,10 @@ const Editor = (props) =>{
 
             for(let i = 0; i < speakerOptions.length; i++){
                 const option = document.createElement("div")
-                option.innerHTML = `This text => ${speakerOptions[i].name}`
+                option.innerHTML = `This text => ${speakerOptions[i]}`
                 option.classList.add("speakerOption")
                 div.appendChild(option)
-                option.addEventListener("mouseup", handleLocalTextChangeFactory(speakerOptions[i].name, {baseNode: selected.baseNode, focusNode: selected.focusNode}))
+                option.addEventListener("mouseup", handleLocalTextChangeFactory(speakerOptions[i], {baseNode: selected.baseNode, focusNode: selected.focusNode}))
             }
 
             document.querySelector("html").addEventListener("mouseup", closeMenu)
@@ -201,8 +203,11 @@ const Editor = (props) =>{
     })
 
     useEffect(()=>{
-        if(editorMode === 2){
+        if(editorMode === 1 || editorMode === 2){
             const selected = document.querySelector(".Editor__SelectedWord")
+            if(!selected){
+                return
+            }
             const r = new Range()
             r.setStart(selected.childNodes[0], 0)
             r.setEnd(selected.childNodes[0], selected.innerHTML.length)
@@ -214,7 +219,7 @@ const Editor = (props) =>{
 
     useEffect(()=>{
         const moveSelectorWord = (e) =>{
-            if(editorMode === 0 && !document.getElementById("audio").paused){
+            if((editorMode === 0 && !document.getElementById("audio").paused) || editorMode===2){
                 return
             }
             if(e.key === "ArrowRight"){
@@ -227,6 +232,10 @@ const Editor = (props) =>{
                 selected.classList.remove("Editor__SelectedWord")
                 allWords[parseInt(selected.getAttribute("totalwordindex")) - 1].classList.add("Editor__SelectedWord")
                 setMoveSelected(moveSelected+1)
+            } else{
+                const selected = document.querySelectorAll(".Editor__SelectedWord")
+                selected.forEach(el=>el.classList.remove("Editor__SelectedWord"))
+                setEditorMode(2)
             }
         }
 
@@ -241,7 +250,9 @@ const Editor = (props) =>{
 
 
     const changeSpeaker = (oldName, newName, sections) =>{
+        console.log(sections[0][0])
         const result = []
+        console.log(oldName, newName)
         for(let i = 0; i < sections.length; i++){
             if(sections[i][0].speaker !== oldName){
                 result.push(sections[i])
@@ -262,6 +273,9 @@ const Editor = (props) =>{
     const changeSectionSpeaker = (index, newName, sections) =>{
         const result = [...sections]
         const toChange = result[index]
+        if(!toChange){
+            return
+        }
         for(let i = 0; i < toChange.length; i++){
             toChange[i].speaker = newName
         }
@@ -331,14 +345,33 @@ const Editor = (props) =>{
         })
     }
 
+    const removeSpeakerBox = () => setAddSpeakerBox(false)
+
+    const stopProp = e => e.stopPropagation()
+
+    const makeTheSpeakerBoxAppear = () => setAddSpeakerBox(true)
+
+    console.log("in editor", sections[0][0].speaker)
     return(
+        <>
+        {addSpeakerBox ? 
+        <>
+        <div className="containerForTheSpeakerContainer" onClick={removeSpeakerBox}>
+        <div className="speakerAdderDiv" onClick={stopProp}>
+            <SpeakerDisplay id={transcriptId} />
+        </div>
+        </div>
+        <div className="darkenTheScreen">
+        </div>
+        </>
+         : null}
         <div className="editorPage" id="editorPage">
             <h2 className="Editor__Title">{data.transcript.title}</h2>
             <AudioPlayerWrapper editorMode={editorMode} setEditorMode={setEditorMode} keepWithTime={keepWithTime} />
             {sections.map((el, i) => {
                 return(
                     <div className="section" key={i}>
-                        <SpeakerSection changeSectionSpeaker={changeSectionSpeaker} speakerList={speakerOptions} number={i} speaker={el[0].speaker} sections={sections} stateUpdater={changeSpeaker} />
+                        <SpeakerSection openSpeakerBox={makeTheSpeakerBoxAppear} changeSectionSpeaker={changeSectionSpeaker} speakerList={speakerOptions} number={i} speaker={el[0].speaker} sections={sections} stateUpdater={changeSpeaker} />
                         <Text text={el} speaker={el[0].speaker} specialKey={i} editorMode={editorMode} />
                     </div>
                 )
@@ -347,7 +380,9 @@ const Editor = (props) =>{
             <br />
             {typeOfUser === "Podcaster" ? <><Button variant={"contained"} onClick={approveT}>Approve Transcript</Button> <Button variant={"contained"} onClick={rejectT}>Reject Transcript</Button> </>:
             submitting ? <Button variant={"contained"} >Please Wait</Button> : <Button variant={"contained"} onClick={submitTranscript}>Submit Transcript</Button>}
+
         </div>
+        </>
     )
 
 }

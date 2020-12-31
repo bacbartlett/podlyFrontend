@@ -45,7 +45,7 @@ const useAudioPlayer = (podcast, keepWithTime, editorMode, setEditorMode) =>{
             if(e.key === "Enter"){
                 if(editorMode === 0){
                     setPlaying(false)
-                    setEditorMode(2)
+                    setEditorMode(1)
                 } else{
                     setPlaying(true)
                     setEditorMode(0)

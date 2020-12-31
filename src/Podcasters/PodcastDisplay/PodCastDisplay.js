@@ -1,7 +1,8 @@
 import React from "react"
 import { useDispatch } from "react-redux"
 import { useHistory, useParams } from "react-router"
-import {setMediaUrl} from "../../Store/actions"
+import {setMediaUrl, createNewTranscriptJob} from "../../Store/actions"
+
 
 
 
@@ -18,8 +19,13 @@ const PodcastDisplay = (props) =>{
 
     const createNewTranscriptLink = (mediaurl, title) =>{
         return () => {
-            dispatch(setMediaUrl(mediaurl))
-            history.push(`/podcaster/podcasts/${id}/newtranscript/${title}`)
+            const prom = createNewTranscriptJob(mediaUrl, id, [], title)
+            prom.then(val=>{
+                console.log("THIS IS THE ID", val)
+                dispatch(setMediaUrl(val))
+                history.push(`/podcaster/podcasts/${id}/newtranscript/${title}`)
+            })
+            
         }
     }
 

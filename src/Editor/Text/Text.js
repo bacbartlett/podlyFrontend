@@ -6,7 +6,8 @@ import {updateWordArr} from "../../Store/actions"
 const Text = (props) =>{
     const dispatch = useDispatch()
     const {text, specialKey, speaker} = props
-    const editorMode = props.editorMode === 2
+ 
+    const editorMode = (props.editorMode === 2 || props.editorMode === 1)
     
     
     const reinsertMetaData = (e) =>{

@@ -105,7 +105,7 @@ function App() {
         <PodcastTranscripts />
       </Route>
     </Router>
-    <a href="https://www.freepik.com/vectors/technology">Technology vector created by freepik - www.freepik.com</a>
+    {/* <a href="https://www.freepik.com/vectors/technology">Technology vector created by freepik - www.freepik.com</a> */}
     </>
   );
 }

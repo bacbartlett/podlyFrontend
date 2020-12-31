@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import ListDividers from "./ContextBoxSpeaker"
 
 const SpeakerSection = (props) =>{
@@ -7,14 +8,34 @@ const SpeakerSection = (props) =>{
     const number = props.number
     const sections = props.sections
     const changeSectionSpeaker = props.changeSectionSpeaker
+    
 
-    const changeSectionNameFunction = (name) =>{
+    const speakerList = useSelector(state=>state.speakers)
+
+    const [localSpeakerList, setLocalSpeakerList] = useState(speakerList)
+
+    const [localSections, setLocalSections] = useState(sections)
+
+    console.log("THISNFISNFSF", sections[0][0].speaker)
+
+    useEffect(()=>{
+        console.log("RUNNING FUCKER", sections[0][0].speaker)
+        setLocalSections(sections)
+    }, [sections])
+
+    useEffect(()=>{
+        setLocalSpeakerList(speakerList)
+    }, [speakerList])
+
+    const changeSectionNameFunction = (name, sections) =>{
+        console.log("Running:", number, props.sections[0][0].speaker, props.sections[0][1].speaker)
         changeSectionSpeaker(number, name, sections)
     } 
 
     const createSectionNameSwitcherFunction = (name, sections)=>{
+        console.log("CREATING:", number, props.sections[0][0].speaker, props.sections[0][1].speaker)
         return(e) =>{
-            changeSectionNameFunction(name)
+            changeSectionNameFunction(name, sections)
         }
     }
     
@@ -32,6 +53,7 @@ const SpeakerSection = (props) =>{
     //set up the event listeners to open and close menus
     useEffect(()=>{
         const handleClick = (e) =>{
+            console.log(localSpeakerList)
             e.stopPropagation()
             document.querySelector("html").addEventListener("click", handleClickOut)
             const div = document.createElement("div")
@@ -41,22 +63,31 @@ const SpeakerSection = (props) =>{
             div.style.left = e.clientX + "px";
             div.backgroundColor = "grey"
             
-            for(let i = 0; i < props.speakerList.length; i++){
+            for(let i = 0; i < localSpeakerList.length; i++){
+                console.log(i)
                 const option = document.createElement("div")
-                option.innerHTML = `${speakerName} => ${props.speakerList[i].name}`
+                option.innerHTML = `${speakerName} => ${localSpeakerList[i]}`
                 option.style.display = "flex"
                 option.classList.add("speakerOption")
                 div.appendChild(option)
-                option.addEventListener("click", createNameSwitcherFunction(props.speakerList[i].name, sections))
+                option.addEventListener("click", createNameSwitcherFunction(localSpeakerList[i], localSections))
             }
-            for(let i = 0; i < props.speakerList.length; i++){
+            for(let i = 0; i < localSpeakerList.length; i++){
+                console.log(i)
                 const option = document.createElement("div")
-                option.innerHTML = `This Section => ${props.speakerList[i].name}`
+                option.innerHTML = `This Section => ${localSpeakerList[i]}`
                 option.style.display = "flex"
                 option.classList.add("speakerOption")
                 div.appendChild(option)
-                option.addEventListener("click", createSectionNameSwitcherFunction(props.speakerList[i].name, sections))
+                option.addEventListener("click", createSectionNameSwitcherFunction(localSpeakerList[i], localSections))
             }
+
+            const option = document.createElement("div")
+            option.innerHTML = "Change Name Options"
+            option.style.display = "flex"
+            option.classList.add("speakerOption")
+            div.appendChild(option)
+            option.addEventListener("click", props.openSpeakerBox)
 
             
 
@@ -72,9 +103,13 @@ const SpeakerSection = (props) =>{
         document.getElementById(`speakerSection${number}`).addEventListener("click", handleClick)
 
         const removeEventListeners = () =>{
-            document.getElementById(`speakerSection${number}`).removeEventListener("click", handleClick)
+            const temp = document.getElementById(`speakerSection${number}`)
+            if(temp){
+                temp.removeEventListener("click", handleClick)
+            }
+            
         }
-        //return removeEventListeners
+        return removeEventListeners
     })
 
     return(

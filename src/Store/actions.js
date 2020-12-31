@@ -22,6 +22,10 @@ export const UPDATE_SECTIONS = "UPDATE_SECTIONS"
 export const CLEAR_SECTIONS = "CLEAR_SECTIONS"
 export const SET_PODCASTDISPLAY = "SET_PODCASTDISPLAY"
 export const CLEAR_PODCASTS = "CLEAR_PODCASTS"
+export const SET_SPEAKERS = "SET_SPEAKERS"
+export const SAVE_SPEAKERS = "SAVE_SPEAKERS"
+export const ADD_SPEAKER = "ADD_SPEAKER"
+export const DELETE_SPEAKER = "DELETE_SPEAKER"
 
 export const getPodcast = async (podcastId) =>{
     const res = await fetch(baseUrl + "/podcaster/podcasts/" + podcastId, {
@@ -158,7 +162,7 @@ export const clearMediaUrl = () =>{
 }
 
 export const createNewTranscriptJob = async (mediaLink, podcastId, speakerNames, title) =>{
-    const res = await fetch(baseUrl + `/podcaster/podcasts/${podcastId}/newJob`, {
+    const res = await fetch(baseUrl + `/podcaster/podcasts/${podcastId}/newjob`, {
         method: "POST",
         headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -180,7 +184,7 @@ export const createNewTranscriptJob = async (mediaLink, podcastId, speakerNames,
     // const res2 = await fetch(baseUrl + `/podcaster/podcast/${podcastId}`)
     // const data2 = res2.json()
     // return{type: GET_PODCAST, payload: data2}
-    return clearMediaUrl()
+    return data.id
     
 }
 
@@ -342,6 +346,45 @@ export const getTranscriptsForPodcast = async (id) =>{
 export const clearTranscriptsForPodcast = () =>{
     return {
         type: CLEAR_TRANSCRIPTS
+    }
+}
+
+export const setSpeakers = async (id) => {
+    const res = await fetch(baseUrl + "/transcriber/transcription/" + id + "/speakers")
+    const data = await res.json()
+    const speakers = []
+    data.speakers.forEach(el=>speakers.push(el.name))
+    return{
+        type: SET_SPEAKERS,
+        payload: speakers
+    }
+}
+
+export const addSpeaker = (speaker) => {
+    return{
+        type: ADD_SPEAKER,
+        payload: speaker
+    }
+}
+
+export const deleteSpeaker = (speaker) => {
+    return{
+        type: DELETE_SPEAKER,
+        payload: speaker
+    }
+}
+
+export const saveSpeakers = async (id, speakers) => {
+    const res = await fetch(baseUrl + "/transcriber/transcription/" + id + "/speakers", {
+        method: "POST",
+        headers:{
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({speakers})
+    })
+    return{
+        type: SAVE_SPEAKERS,
     }
 }
 

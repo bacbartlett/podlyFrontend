@@ -1,6 +1,6 @@
 import {GET_PODCAST, CLEAR_PODCAST, SET_USER, REMOVE_USER, SET_ERROR, CLEAR_ERROR, SET_MYPODCASTS, CLEAR_MYPODCASTS, SET_MEDIAURL, CLEAR_MEDIAURL,
     SET_TRANSCRIPTS, CLEAR_TRANSCRIPTS, GET_EDITORDATA, CLEAR_EDITORDATA, UPDATE_WORDARR, UPDATE_AUDIOISLOADED, UPDATE_SECTIONS, CLEAR_SECTIONS,
-    SET_PODCASTDISPLAY, CLEAR_PODCASTS} from "./actions"
+    SET_PODCASTDISPLAY, CLEAR_PODCASTS, SET_SPEAKERS, SAVE_SPEAKERS, ADD_SPEAKER, DELETE_SPEAKER} from "./actions"
 
 export const podcastDisplayReducer = (state={}, action)=>{
     switch(action.type){
@@ -136,6 +136,36 @@ export const sectionsReducer = (state = [], action) =>{
         }
         case CLEAR_SECTIONS:{
             return state
+        }
+        default:{
+            return state
+        }
+    }
+}
+
+export const speakerReducer = (state = [], action) =>{
+    switch(action.type){
+        case SET_SPEAKERS:{
+            return action.payload
+        }
+        case SAVE_SPEAKERS: {
+            return state
+        }
+
+        case ADD_SPEAKER: {
+            return [...state, action.payload]
+        }
+        
+        case DELETE_SPEAKER: {
+            const tempState = [...state]
+            const i = tempState.indexOf(action.payload)
+            console.log(i, tempState, action.payload)
+            if(i > -1){
+                tempState.splice(i, 1)
+                return tempState
+            } else{
+                return state
+            }
         }
         default:{
             return state

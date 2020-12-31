@@ -28,3 +28,39 @@
 .Editor__Title{
     padding-left: 30px;
 }
+
+.darkenTheScreen{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position:absolute;
+    height: 1000px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, .75);
+    z-index: 99;
+}
+
+.speakerAdderDiv{
+    min-height: 350px;
+    min-width: 400px;
+    max-width: 500px;
+    background-color: rgba(255, 255, 255, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.containerForTheSpeakerContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position:absolute;
+    height: 1000px;
+    width: 100%;
+    z-index: 100;
+    display: flex;
+}
+
+.Editor__SelectedWord{
+    background-color: #1B4079;
+    color: white
+}
