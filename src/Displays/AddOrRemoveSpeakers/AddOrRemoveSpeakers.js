@@ -14,7 +14,6 @@ const AddOrRemoveSpeakers = (props) =>{
 
     const createRemoveFunction = (speakerName) =>{
         return ()=>{
-            console.log("running")
             dispatch(deleteSpeaker(speakerName))
         }
     }
@@ -38,7 +37,6 @@ const AddOrRemoveSpeakers = (props) =>{
         setSpeakers(speakers)
     }, [speakers])
 
-    console.log(stateSpeakers, speakers)
 
     return(
         <div className="speakerEdit">

@@ -159,7 +159,6 @@ export const speakerReducer = (state = [], action) =>{
         case DELETE_SPEAKER: {
             const tempState = [...state]
             const i = tempState.indexOf(action.payload)
-            console.log(i, tempState, action.payload)
             if(i > -1){
                 tempState.splice(i, 1)
                 return tempState

@@ -16,10 +16,7 @@ const SpeakerSection = (props) =>{
 
     const [localSections, setLocalSections] = useState(sections)
 
-    console.log("THISNFISNFSF", sections[0][0].speaker)
-
     useEffect(()=>{
-        console.log("RUNNING FUCKER", sections[0][0].speaker)
         setLocalSections(sections)
     }, [sections])
 
@@ -28,12 +25,10 @@ const SpeakerSection = (props) =>{
     }, [speakerList])
 
     const changeSectionNameFunction = (name, sections) =>{
-        console.log("Running:", number, props.sections[0][0].speaker, props.sections[0][1].speaker)
         changeSectionSpeaker(number, name, sections)
     } 
 
     const createSectionNameSwitcherFunction = (name, sections)=>{
-        console.log("CREATING:", number, props.sections[0][0].speaker, props.sections[0][1].speaker)
         return(e) =>{
             changeSectionNameFunction(name, sections)
         }
@@ -53,7 +48,6 @@ const SpeakerSection = (props) =>{
     //set up the event listeners to open and close menus
     useEffect(()=>{
         const handleClick = (e) =>{
-            console.log(localSpeakerList)
             e.stopPropagation()
             document.querySelector("html").addEventListener("click", handleClickOut)
             const div = document.createElement("div")
@@ -64,7 +58,6 @@ const SpeakerSection = (props) =>{
             div.backgroundColor = "grey"
             
             for(let i = 0; i < localSpeakerList.length; i++){
-                console.log(i)
                 const option = document.createElement("div")
                 option.innerHTML = `${speakerName} => ${localSpeakerList[i]}`
                 option.style.display = "flex"
@@ -73,7 +66,6 @@ const SpeakerSection = (props) =>{
                 option.addEventListener("click", createNameSwitcherFunction(localSpeakerList[i], localSections))
             }
             for(let i = 0; i < localSpeakerList.length; i++){
-                console.log(i)
                 const option = document.createElement("div")
                 option.innerHTML = `This Section => ${localSpeakerList[i]}`
                 option.style.display = "flex"

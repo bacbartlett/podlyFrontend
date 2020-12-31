@@ -21,7 +21,6 @@ const PodcastDisplay = (props) =>{
         return () => {
             const prom = createNewTranscriptJob(mediaUrl, id, [], title)
             prom.then(val=>{
-                console.log("THIS IS THE ID", val)
                 dispatch(setMediaUrl(val))
                 history.push(`/podcaster/podcasts/${id}/newtranscript/${title}`)
             })

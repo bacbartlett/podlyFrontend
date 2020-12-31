@@ -250,9 +250,7 @@ const Editor = (props) =>{
 
 
     const changeSpeaker = (oldName, newName, sections) =>{
-        console.log(sections[0][0])
         const result = []
-        console.log(oldName, newName)
         for(let i = 0; i < sections.length; i++){
             if(sections[i][0].speaker !== oldName){
                 result.push(sections[i])
@@ -351,7 +349,6 @@ const Editor = (props) =>{
 
     const makeTheSpeakerBoxAppear = () => setAddSpeakerBox(true)
 
-    console.log("in editor", sections[0][0].speaker)
     return(
         <>
         {addSpeakerBox ? 
