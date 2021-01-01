@@ -1,3 +1,5 @@
+This needs to be changed to something about the app!
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
