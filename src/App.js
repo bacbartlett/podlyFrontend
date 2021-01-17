@@ -20,6 +20,7 @@ import TranscriptViewerWrapper from "./TranscriptViewer/WrapperTranscriptViewer"
 import {baseUrl} from "./config"
 import PendingTranscripts from "./Podcasters/PendingTranscripts/PendingTranscripts"
 import PodcastTranscripts from "./Researcher/PodcastTranscripts/PodcastTranscripts"
+import AboutPage from "./AboutPage/AboutPage"
 
 function App() {
   const dispatch = useDispatch()
@@ -103,6 +104,9 @@ function App() {
       </Route>
       <Route exact={true} path={"/podcasts/:id"}>
         <PodcastTranscripts />
+      </Route>
+      <Route exact={true} path="/about">
+        <AboutPage />
       </Route>
     </Router>
     {/* <a href="https://www.freepik.com/vectors/technology">Technology vector created by freepik - www.freepik.com</a> */}

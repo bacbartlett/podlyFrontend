@@ -1,3 +1,20 @@
 .AboutPageDiv{
-    max-width: 80%;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.AboutPage__writtenSection{
+    width: 80%;
+    margin: 3px 0 3px 0;
+}
+
+.AboutPage__Header{
+    margin-left: 5px;
+}
+
+.AboutPage__Content{
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 550;
 }
