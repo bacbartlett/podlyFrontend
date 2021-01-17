@@ -53,10 +53,10 @@ const NavBar = (props) =>{
             <div className="NavBar__Loginandsignout">
             <div onClick={goToAbout} className="NavBar__MyTranscripts NavBar__Link">
                 About This Site
-                </div>
-                <div onClick={logout} className="NavBar__Logout NavBar__Link">
+            </div>
+            <div onClick={logout} className="NavBar__Logout NavBar__Link">
                 Log Out
-                </div>
+            </div>
                 
             </div>
             

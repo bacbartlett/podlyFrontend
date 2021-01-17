@@ -12,6 +12,10 @@ const NavBar = (props) =>{
         dispatch(removeUser())
     }
 
+    const goToAbout = () =>{
+        history.push("/about")
+    }
+
     const goToMyPodcasts = () =>{
         history.push("/podcaster")
     }
@@ -35,10 +39,17 @@ const NavBar = (props) =>{
             <div onClick={goToPendingJobs} className="NavBar__PendingJobs NavBar__Link">
                 Pending Jobs
             </div>
+            <div className="NavBar__Loginandsignout">
+            <div onClick={goToAbout} className="NavBar__MyTranscripts NavBar__Link">
+                About This Site
+            </div>
             <div onClick={logout} className="NavBar__Logout NavBar__Link">
                 Log Out
             </div>
-        </div>
+                
+            </div>
+                
+            </div>
     )
 }
 

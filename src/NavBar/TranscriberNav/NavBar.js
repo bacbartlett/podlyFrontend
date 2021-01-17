@@ -24,6 +24,10 @@ const NavBar = (props) =>{
         history.push("/")
     }
 
+    const goToAbout = () =>{
+        history.push("/about")
+    }
+
     return(
         <div className="NavBar">
             <div onClick={goHome} className="NavBar__Home NavBar__Link">
@@ -35,10 +39,17 @@ const NavBar = (props) =>{
             <div onClick={goToMyTranscripts} className="NavBar__MyTranscripts NavBar__Link">
                 My Transcripts
             </div>
+            <div className="NavBar__Loginandsignout">
+            <div onClick={goToAbout} className="NavBar__MyTranscripts NavBar__Link">
+                About This Site
+            </div>
             <div onClick={logout} className="NavBar__Logout NavBar__Link">
                 Log Out
             </div>
-        </div>
+                
+            </div>
+                
+            </div>
     )
 }
 
