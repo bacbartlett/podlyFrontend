@@ -4,6 +4,7 @@
 @import "./Displays/PodcastDisplay/podcastDisplay.css";
 @import "./Displays//EpisodeDisplay/EpisodeDisplay.css";
 @import "./Editor/Editor.css";
+@import "./AboutPage/AboutPage.css";
 
 html{
     height: 100%;
