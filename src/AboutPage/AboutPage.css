@@ -18,3 +18,15 @@
     font-family: 'Open Sans', sans-serif;
     font-weight: 550;
 }
+
+.AboutPage__FirstImageSection{
+    height: 250px;
+    width: 800px;
+    background-repeat: no-repeat;
+}
+
+.AboutPage__SecondImageSection{
+    height: 250px;
+    width: 800px;
+    background-repeat: no-repeat;
+}

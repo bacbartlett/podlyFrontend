@@ -64,3 +64,15 @@
     background-color: #1B4079;
     color: white
 }
+
+.titleAndButton{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.helpButton{
+    height: 35px;
+    margin-right: 30px;
+}

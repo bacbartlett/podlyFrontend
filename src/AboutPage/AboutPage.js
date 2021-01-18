@@ -40,12 +40,25 @@ const AboutPage = (props) =>{
                 </div>
             </div>
             <div className="AboutPage__writtenSection">
-                <div className="AboutPage__Header">
+                <div className="AboutPage__Header" id="editorHelp">
                     <h2>How To Use The Editor</h2>
                     <p className="AboutPage__Content">
                         While editing a podcast, one should start by pressing the play button on the player at the top of the screen. Track along with the podcast and look for any mistakes. When you see one, press the "enter" key, which will pause the podcast and allow you to use the arrow keys to highlight the exact word that is in error. Once that word is highlighted, simply type the correct word. If there are multiple errors in the same area, feel free to continue to use the arrow keys to navigate and clear any other errors. When you are ready to resume, press the "enter" key again. <br />
                         <br />
-                        The transcriber is also responsible for correctly assigning names to each speaker. When you click on a speaker name (e.g. "speaker 1"), a list of options will come up allowing you to assign a name. These options let you either assign all text currently labeled as "speaker 1" to a given name, or only the text block you have clicked on. Likewise, if AWS does not correctly identify when there is a speaker change, you can highlight a section of text, triggering a menu to pop up allowing just that text to be reassigned. Do no worry if this creates two consecutive blocks by the same speaker as this will be corrected in post processing.
+                        The transcriber is also responsible for correctly assigning names to each speaker. When you click on a speaker name (e.g. "speaker 1"), a list of options will come up allowing you to assign a name. These options let you either assign all text currently labeled as "speaker 1" to a given name, or only the text block you have clicked on. 
+                        <br />
+                        <br />
+                        <div className="AboutPage__FirstImageSection" style ={ { backgroundImage: "url('/changeSpeaker.gif')" } }>
+
+                        </div>
+                         <br />
+                        Likewise, if AWS does not correctly identify when there is a speaker change, you can highlight a section of text, triggering a menu to pop up allowing just that text to be reassigned. Do no worry if this creates two consecutive blocks by the same speaker as this will be corrected in post processing.
+                        <br />
+                        <br />
+                        <div className="AboutPage__FirstImageSection" style ={ { backgroundImage: "url('/changeSection.gif')" } }>
+
+                        </div>
+                        <br />
                     </p>
                 </div>
             </div>

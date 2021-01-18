@@ -349,6 +349,8 @@ const Editor = (props) =>{
 
     const makeTheSpeakerBoxAppear = () => setAddSpeakerBox(true)
 
+    const goToAbout = (e) => history.push("/about#editorHelp")
+
     return(
         <>
         {addSpeakerBox ? 
@@ -363,7 +365,13 @@ const Editor = (props) =>{
         </>
          : null}
         <div className="editorPage" id="editorPage">
+            <div className="titleAndButton">
             <h2 className="Editor__Title">{data.transcript.title}</h2>
+            <div className="helpButton">
+                <Button variant="outlined" color="primary" onClick={goToAbout}>How To Use This Editor</Button>
+            </div>
+            </div>
+            
             <AudioPlayerWrapper editorMode={editorMode} setEditorMode={setEditorMode} keepWithTime={keepWithTime} />
             {sections.map((el, i) => {
                 return(
