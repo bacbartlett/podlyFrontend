@@ -53,12 +53,6 @@ function App() {
     <>
     <Router>
       <Switch>
-        <Route exact={false} path="/podcaster">
-          <PodcasterNav />
-        </Route>
-        <Route exact={false} path="/transcriber">
-          <TranscriberNav />
-        </Route>
         <Route path="/" exact={false}>
           <DefaultNav />
         </Route>
