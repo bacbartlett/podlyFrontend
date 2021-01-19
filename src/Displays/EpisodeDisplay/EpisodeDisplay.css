@@ -45,3 +45,20 @@
     align-items: center;
     margin: 0 0 0 15px;
 }
+
+.message{
+    background-color: white;
+    width: 50%;
+}
+
+.darkenTheScreen2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position:sticky;
+    top: 0;
+    height: 1000px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, .75);
+    z-index: 99;
+}
