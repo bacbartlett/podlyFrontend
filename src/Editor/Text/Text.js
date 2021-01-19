@@ -109,11 +109,11 @@ const Text = (props) =>{
 
     return(
         <>
-        {editorMode ? <div onBlur={reinsertMetaData} className={specialKey} contentEditable={true}>
+        {editorMode ? <div onBlur={reinsertMetaData} id={specialKey} className={'textSection'} contentEditable={true}>
                 {text.map((el, i) =>{
                     return <span className="Editor__Word"  speaker={el.speaker} starttime={el.startTime} sectionindex={specialKey} wordindex={i} endtime={el.endTime} key={specialKey.toString() + i.toString()}>{el.formatted + " "}</span>
                 })}
-        </div> : <div>
+        </div> : <div id={specialKey} className={'textSection'}>
             {text.map((el, i) =>{
                 return <span className="Editor__Word" speaker={el.speaker} starttime={el.startTime} sectionindex={specialKey} wordindex={i} endtime={el.endTime} key={specialKey.toString() + i.toString()}>{el.formatted + " "}</span>
             })}

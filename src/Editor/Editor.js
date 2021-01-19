@@ -195,11 +195,11 @@ const Editor = (props) =>{
             document.querySelector("html").addEventListener("mouseup", closeMenu)
         }
 
-        const editorPage = document.getElementById("editorPage")
-        if(!editorPage){
+        const textSection = document.querySelectorAll(".textSection")
+        if(!textSection.length){
             return
         }
-        editorPage.addEventListener("mouseup", handleMouseUp)
+        textSection.forEach(el=>el.addEventListener("mouseup", handleMouseUp))
     })
 
     useEffect(()=>{
@@ -229,7 +229,10 @@ const Editor = (props) =>{
                 } else{
                     return
                 }
-                allWords[parseInt(selected.getAttribute("totalwordindex")) + 1].classList.add("Editor__SelectedWord")
+                const newWord = allWords[parseInt(selected.getAttribute("totalwordindex")) + 1]
+                if(newWord){
+                    newWord.classList.add("Editor__SelectedWord")
+                }
                 setMoveSelected(moveSelected+1)
             } else if(e.key === "ArrowLeft"){
                 const selected = document.querySelector(".Editor__SelectedWord")
