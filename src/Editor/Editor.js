@@ -210,7 +210,7 @@ const Editor = (props) =>{
             }
             const r = new Range()
             r.setStart(selected.childNodes[0], 0)
-            r.setEnd(selected.childNodes[0], selected.innerHTML.length)
+            r.setEnd(selected.childNodes[0], (selected.innerHTML.includes("&nbsp") ? selected.innerHTML.length - 5 : selected.innerHTML.length))
             const selection = window.getSelection()
             selection.collapse(null)
             selection.addRange(r)
@@ -224,13 +224,21 @@ const Editor = (props) =>{
             }
             if(e.key === "ArrowRight"){
                 const selected = document.querySelector(".Editor__SelectedWord")
-                selected.classList.remove("Editor__SelectedWord")
+                if(selected){
+                    selected.classList.remove("Editor__SelectedWord")
+                } else{
+                    return
+                }
                 allWords[parseInt(selected.getAttribute("totalwordindex")) + 1].classList.add("Editor__SelectedWord")
                 setMoveSelected(moveSelected+1)
             } else if(e.key === "ArrowLeft"){
                 const selected = document.querySelector(".Editor__SelectedWord")
-                selected.classList.remove("Editor__SelectedWord")
-                allWords[parseInt(selected.getAttribute("totalwordindex")) - 1].classList.add("Editor__SelectedWord")
+                if(selected){
+                    selected.classList.remove("Editor__SelectedWord")
+                } else{
+                    return
+                }
+                allWords[((parseInt(selected.getAttribute("totalwordindex")) - 1) < 0 ? 0 : (parseInt(selected.getAttribute("totalwordindex")) - 1))].classList.add("Editor__SelectedWord")
                 setMoveSelected(moveSelected+1)
             } else{
                 const selected = document.querySelectorAll(".Editor__SelectedWord")
