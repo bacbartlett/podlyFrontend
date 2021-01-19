@@ -30,7 +30,12 @@ const MyPodcasts = (props) =>{
     const addFeed = e =>{
         setNewRSSFeed("")
         const prom = setNewPodcast(newRSSFeed)
-        prom.then(val => dispatch(val))
+        prom.then(val => {
+            dispatch(val)
+            const pods = setMyPodcasts()
+            pods.then(val=> dispatch(val))
+
+        })
     }
 
     const generateLinkFunction = (id) =>{
@@ -55,12 +60,14 @@ const MyPodcasts = (props) =>{
     }
     return(
         <>
-        <PodcastDisplay  title={"My Podcasts"} clickStub={"/podcaster/podcasts"} podcasts={myPodcastsState} />
+        <PodcastDisplay  title={"My Podcasts"} clickStub={"/podcaster/podcasts"} podcasts={myPodcastsState} additionOption={true}/>
         <br/>
         <br/>
+        <div className="addRSSFeedDiv">
         <label>Add New RSS Feed:</label>
         <input value={newRSSFeed} onChange={handleRSSFeedChange}></input>
         <button onClick={addFeed}>Add Feed</button>
+        </div>
 
 
         </>

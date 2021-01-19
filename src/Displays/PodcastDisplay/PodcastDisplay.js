@@ -1,12 +1,14 @@
-import React from "react"
+import React, { useState } from "react"
 import { useHistory } from "react-router"
 
 //this expects an array of podcast objects
 //a podcast object is the model from the database
 const PodcastDisplay = (props) =>{
-    const {podcasts, clickStub, title} = props
+    const {podcasts, clickStub, title, additionOption} = props
     const {results, totalPages} = podcasts
     const history = useHistory()
+
+    const [displayModule, setDisplayModule] = useState(false)
 
     const createClickFunction = (id) =>{
         return () =>{

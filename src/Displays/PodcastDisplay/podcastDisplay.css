@@ -42,3 +42,11 @@
     height: 100%;
     font-size: 40px;
 }
+
+.addRSSFeedDiv{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100px;
+}
