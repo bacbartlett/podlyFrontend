@@ -85,6 +85,9 @@ function App() {
       <Route exact={true} path="/transcriber">
         <TranscriberHomepage />
       </Route>
+      <Route exact={true} path="/transcriber/mytranscripts">
+        <h1>Coming Soon</h1>
+      </Route>
       <Route exact={true} path="/researcher">
         <ResearcherHomepage />
       </Route>

@@ -2,7 +2,10 @@ import React from "react"
 
 const ResearcherHomepage = (props) =>{
     return(
-        <h1>ResearcherHomepage</h1>
+        <>
+        <h1>Coming Soon</h1>
+        <h3>The ability to add notes is coming soon</h3>
+        </>
     )
 }
 
